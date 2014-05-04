@@ -191,7 +191,8 @@ img.profile {
 .post pre {
   border: 1px solid #ddd;
   background-color: #eef;
-  padding: 0 .4em;
+  padding: 6px 10px;
+  margin: 16px 0;
 }
 
 .post ul, .post ol {
