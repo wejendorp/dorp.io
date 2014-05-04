@@ -33,7 +33,7 @@ h2 {
 
 p { margin: 1em 0; }
 
-a         { color: #00a; text-decoration: none;}
+a         { color: #00e; text-decoration: none;}
 a:hover   { color: #000; text-decoration: underline;}
 
 /*****************************************************************************/
@@ -50,7 +50,7 @@ a:hover   { color: #000; text-decoration: underline;}
 }
 
 .card {
-  border-top: 2px solid #fafafa;
+  /*border-top: 2px solid #fafafa;*/
   border-bottom: 2px solid #fafafa;
   padding: 16px;
   border-radius: 3px;
@@ -115,11 +115,12 @@ img.profile {
 }
 
 .meta {
+  margin-top: 0;
   color: #aaa;
 }
 
 .header {
-  background: #fafafa;
+  /*background: #fafafa;*/
   border-bottom: 1px solid #f3f3f3;
   position: absolute;
   width: 100%;
