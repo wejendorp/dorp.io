@@ -2,3 +2,5 @@ name: Jacob Wejendorp
 permalink: none
 markdown: redcarpet
 pygments: true
+excerpt_separator: <!--more-->
+encoding: utf-8

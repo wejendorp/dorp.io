@@ -11,7 +11,9 @@ angular module, as well as generate a shared color configuration in our stylus a
 I stumbled upon [grunt-template](http://git.io/grunt-template) while browsing through npmjs looking
 for interesting tasks. Grunt-template is a simple task designed to pass any data you provide into an
 [underscore template](http://underscorejs.org/#template) file, and write the result to another file.
-That's perfect! Now let's write some templates and configure grunt-template.
+That's perfect! Now let's write some templates and configure grunt-template.</section>
+
+<!--more-->
 
 ## Angular modules
 What if we could just define angular modules as <code>{myModule: {myValue: 'Some value'}}</code>?
