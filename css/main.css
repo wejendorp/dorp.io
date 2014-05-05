@@ -188,24 +188,24 @@ img.profile {
   margin-bottom: 48px;
 }
 
-.post pre {
+.post ul, .post ol {
+  margin-left: 1.35em;
+}
+
+pre {
   border-left: 1px solid #ddd;
   background-color: #fafafa;
   padding: 6px 10px;
   margin: 16px 0;
 }
 
-.post ul, .post ol {
-  margin-left: 1.35em;
-}
-
-.post code {
+code {
   border: 1px solid #ddd;
   background-color: #fafafa;
   padding: 0 .2em;
 }
 
-.post pre code {
+pre code {
   border: none;
 }
 

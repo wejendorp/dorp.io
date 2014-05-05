@@ -16,10 +16,10 @@ That's perfect! Now let's write some templates and configure grunt-template.</se
 <!--more-->
 
 ## Angular modules
-What if we could just define angular modules as <code>{myModule: {myValue: 'Some value'}}</code>?
+What if we could just define angular modules as `{myModule: {myValue: 'Some value'}}`?
 This can be done with this simple template.
 
-{% highlight javascript linenos %}
+```js
 // templates/angular-module.tpl
 <% _.forEach(modules, function(moduleData, moduleName) { %>
   angular.module('<%= moduleName %>',[])
@@ -27,11 +27,11 @@ This can be done with this simple template.
     .constant('<%= k %>', <%= JSON.stringify(v) %>)
   <% }); %>;
 <% }); %>
-{% endhighlight %}
+```
 
 And the following grunt-template options:
 
-{% highlight javascript linenos %}
+```js
 // Gruntfile.js
 grunt.initConfig({
   template: {
@@ -56,43 +56,43 @@ grunt.initConfig({
     }
   }
 });
-{% endhighlight %}
+```
 
-So now <code>grunt template:angular</code> should produce
+So now `grunt template:angular` should produce
 
-{% highlight javascript linenos %}
+```js
 // dist/modules.js
 angular.module('myEnvironment')
   .const('env', {"name":"Development","basePath":"http://localhost:3000"})
   ;
-{% endhighlight %}
+```
 
-ready to be included in the angular app, and point to the environment path as <code>env.basePath</code>.
+ready to be included in the angular app, and point to the environment path as `env.basePath`.
 
 
 ## Stylus template
-We want to define a <code>colors</code> module, for which we can use the angular template,
+We want to define a `colors` module, for which we can use the angular template,
 and a stylus file that defines the vars. How about something like this:
 
-{% highlight javascript linenos %}
+```js
 // templates/stylus.tpl
 <% _.forEach(stylus.variables, function(value, key) { %>
 <%- key %> = <%- value %>;<% }); %>
-{% endhighlight %}
+```
 
-That should make a variable for every value in <code>stylus.variables</code>, passed to the template.
-Now we just need to pass an object, <code>{stylus: {variables: { ... }}}</code> to the
+That should make a variable for every value in `stylus.variables`, passed to the template.
+Now we just need to pass an object, `{stylus: {variables: { ... }}}` to the
 task and point to the newly created template.
 
-{% highlight javascript linenos %}
+```js
 // colors.json
 {
   "blue": "#00F",
   "red":  "#F00"
 }
-{% endhighlight %}
+```
 
-{% highlight javascript linenos %}
+```js
 // Gruntfile.js
 var colors = require('./colors.json');
 
@@ -123,22 +123,21 @@ grunt.initConfig({
     }
   }
 });
-{% endhighlight %}
+```
 
-<code>grunt template:colors</code> should now produce
+`grunt template:colors` should now produce
 
-{% highlight javascript linenos %}
+```js
 // dist/colors.js
 angular.module('colors')
   .const('colors', {"blue": "#00F", "red": "#F00"})
   ;
-{% endhighlight %}
+```
 
-{% highlight sass linenos %}
+```css
 // dist/colors.styl
 red = #00F;
 blue = #F00;
-{% endhighlight %}
+```
 
 and we're ready to use our color scheme in code as well as style files.
-
