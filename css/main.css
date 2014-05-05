@@ -189,8 +189,8 @@ img.profile {
 }
 
 .post pre {
-  border: 1px solid #ddd;
-  background-color: #eef;
+  border-left: 1px solid #ddd;
+  background-color: #fafafa;
   padding: 6px 10px;
   margin: 16px 0;
 }
@@ -201,7 +201,7 @@ img.profile {
 
 .post code {
   border: 1px solid #ddd;
-  background-color: #eef;
+  background-color: #fafafa;
   padding: 0 .2em;
 }
 
