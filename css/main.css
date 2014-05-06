@@ -118,6 +118,9 @@ img.profile {
   margin-top: 0;
   color: #aaa;
 }
+h1 + p.meta {
+  margin-top: -11px;
+}
 
 .header {
   /*background: #fafafa;*/
@@ -136,14 +139,13 @@ img.profile {
   float: left;
   width: 152px;
   text-align: center;
-}
-
-.header .title a {
   color: #a00;
+  font-size: 22px;
 }
 
-.header .title a:hover {
-  color: #000;
+.header a:hover {
+  background-color: #fafafa;
+  text-decoration: none;
 }
 
 .header ul {
@@ -157,9 +159,6 @@ img.profile {
   display: block;
   padding: 0 16px;
   color:   #333;
-}
-.header ul li a:hover {
-  color: #8085C1;
 }
 
 
