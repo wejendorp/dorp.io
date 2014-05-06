@@ -63,6 +63,11 @@ stylus: {
 }
 ```
 
+*Gotcha*: Be aware that your chosen import names will first be included automatically
+relative to your current file. So if your current directory contains a file by
+the name `nib.styl`, this will be imported in place of the `nib` module, and
+equivalently with any other imports you place here.
+
 ## Index files
 
 Stylus works like your average web server, looking for `index.styl` in any folder
