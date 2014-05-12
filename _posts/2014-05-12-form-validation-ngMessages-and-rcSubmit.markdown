@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Form validation with rcSubmit and bootstrap"
-date:   2014-05-05 22:47:03
+date:   2014-05-12 23:42:43
 categories: blog
 ---
 
@@ -239,7 +239,7 @@ Which has made our markup entirely free of form references.
 
 ## What about ng-messages?
 
-TODO: I don't know yet...
+### TODO
 
 ```js
 angular.module('myApp')
