@@ -36,6 +36,10 @@ p { margin: 1em 0; }
 a         { color: #00e; text-decoration: none;}
 a:hover   { color: #000; text-decoration: underline;}
 
+.share {
+  margin: 20px;
+  text-align: center;
+}
 /*****************************************************************************/
 /*
 /* Home
