@@ -289,11 +289,10 @@ angular.module('myApp')
       ' ng-messages-include="validations.default" ng-transclude></div>'
   };
 });
-
 ```
 
 Your form is now completely free of name ties, and you've put your directives
-to work for you. 
+to work for you.
 
 ```html
 <form rc-submit="myAction()" name="myForm">
@@ -391,6 +390,7 @@ angular.module('myApp')
     restrict: 'EA',
     require: ['^form', '^formGroup'],
     scope: {},
+    priority: 100,
     link: function(scope, element, attr, controllers) {
       var formCtrl  = controllers[0];
       var formGroup = controllers[1];
@@ -399,11 +399,15 @@ angular.module('myApp')
                       .map(function(i) {
                         return formCtrl[i.$name];
                       });
+      scope.$watch(
+        function() { return formCtrl[attr.for]; },
+        function(field) { scope.fields = [field]; }
+      );
     },
     transclude: true,
     template:
-      '<div ng-repeat="field in fields" ng-messages="field.$error" '+
-      'ng-messages-include="validations.default" ng-transclude></div>'
+      '<div ng-repeat="field in fields" ng-messages="field.$error"'+
+      ' ng-messages-include="validations.default" ng-transclude></div>'
   };
-});;
+});
 ```
