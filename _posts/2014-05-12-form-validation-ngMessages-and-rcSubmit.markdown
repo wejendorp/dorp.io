@@ -278,17 +278,19 @@ angular.module('myApp')
                       .map(function(i) {
                         return formCtrl[i.$name];
                       });
-      scope.$watch(
-        function() { return formCtrl[attr.for]; },
-        function(field) { scope.fields = [field]; }
-      );
+
+      if(attr.for)
+        scope.$watch(
+          function() { return formCtrl[attr.for]; },
+          function(field) { scope.fields = [field]; }
+        );
     },
     transclude: true,
     template:
-      '<div ng-repeat="field in fields" ng-messages="field.$error"'+
-      ' ng-messages-include="validations.default" ng-transclude></div>'
+      '<div ng-repeat="field in fields" ng-messages="field.$error" ng-messages-include="validations.default" ng-transclude></div>'
   };
 });
+
 ```
 
 Your form is now completely free of name ties, and you've put your directives
@@ -399,15 +401,16 @@ angular.module('myApp')
                       .map(function(i) {
                         return formCtrl[i.$name];
                       });
-      scope.$watch(
-        function() { return formCtrl[attr.for]; },
-        function(field) { scope.fields = [field]; }
-      );
+
+      if(attr.for)
+        scope.$watch(
+          function() { return formCtrl[attr.for]; },
+          function(field) { scope.fields = [field]; }
+        );
     },
     transclude: true,
     template:
-      '<div ng-repeat="field in fields" ng-messages="field.$error"'+
-      ' ng-messages-include="validations.default" ng-transclude></div>'
+      '<div ng-repeat="field in fields" ng-messages="field.$error" ng-messages-include="validations.default" ng-transclude></div>'
   };
 });
 ```
