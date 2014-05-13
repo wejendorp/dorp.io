@@ -238,17 +238,85 @@ Which has made our markup entirely free of form references.
 ```
 
 ## What about ng-messages?
+We can get the list of fields belonging to a form group by requireing the
+`formGroup` controller. And then loop the equivalent `formField.$error`
+objects in an ng-repeat.
 
-### TODO
+If your group contains multiple fields and you want to customize the message
+for each of them, you should be able to override this discovery and just tell
+it which field to use. For this we'll use the `for` attribute.
+
+If we attempt to do
+```js
+scope.fields = [formCtrl[attr.for]];
+```
+
+we'll run into issues if we try to define a message before it's field in the
+form. We can solve this by using a watcher.
 
 ```js
 angular.module('myApp')
+.run(function($templateCache) {
+  $templateCache.put('validations.default',
+    '<div ng-message="required">You left the field blank...</div>'+
+    '<div ng-message="minlength">Your field is too short</div>'+
+    '<div ng-message="maxlength">Your field is too long</div>'+
+    '<div ng-message="email">Your field has an invalid email address</div>'
+  );
+})
 .directive('validationMessages', function() {
   return {
-    // ...
-  }
-})
+    restrict: 'EA',
+    require: ['^form', '^formGroup'],
+    scope: {},
+    priority: 100,
+    link: function(scope, element, attr, controllers) {
+      var formCtrl  = controllers[0];
+      var formGroup = controllers[1];
+
+      scope.fields = formGroup.inputs
+                      .map(function(i) {
+                        return formCtrl[i.$name];
+                      });
+      scope.$watch(
+        function() { return formCtrl[attr.for]; },
+        function(field) { scope.fields = [field]; }
+      );
+    },
+    transclude: true,
+    template:
+      '<div ng-repeat="field in fields" ng-messages="field.$error"'+
+      ' ng-messages-include="validations.default" ng-transclude></div>'
+  };
+});
+
 ```
+
+Your form is now completely free of name ties, and you've put your directives
+to work for you. 
+
+```html
+<form rc-submit="myAction()" name="myForm">
+  <div class="form-group">
+
+    <label for="emailAddress">Enter your email address:</label>
+    <input type="email"
+           name="emailAddress"
+           ng-model="data.email"
+           ng-minlength="5"
+           ng-maxlength="30"
+           required />
+
+    <!-- equivalent -->
+    <div validation-messages for="email"></div>
+    <div validation-messages></div>
+  </div>
+  <button class="btn btn-default form-submit"
+          type="submit">Reset password</button>
+</form>
+```
+
+
 
 ## Source
 
@@ -309,5 +377,33 @@ angular.module('myApp')
       });
     }
   };
-});
+})
+.run(function($templateCache) {
+  $templateCache.put('validations.default',
+    '<div ng-message="required">You left the field blank...</div>'+
+    '<div ng-message="minlength">Your field is too short</div>'+
+    '<div ng-message="maxlength">Your field is too long</div>'+
+    '<div ng-message="email">Your field has an invalid email address</div>'
+  );
+})
+.directive('validationMessages', function() {
+  return {
+    restrict: 'EA',
+    require: ['^form', '^formGroup'],
+    scope: {},
+    link: function(scope, element, attr, controllers) {
+      var formCtrl  = controllers[0];
+      var formGroup = controllers[1];
+
+      scope.fields = formGroup.inputs
+                      .map(function(i) {
+                        return formCtrl[i.$name];
+                      });
+    },
+    transclude: true,
+    template:
+      '<div ng-repeat="field in fields" ng-messages="field.$error" '+
+      'ng-messages-include="validations.default" ng-transclude></div>'
+  };
+});;
 ```
