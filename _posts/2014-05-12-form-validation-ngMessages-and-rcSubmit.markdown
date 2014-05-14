@@ -287,7 +287,8 @@ angular.module('myApp')
     },
     transclude: true,
     template:
-      '<div ng-repeat="field in fields" ng-messages="field.$error" ng-messages-include="validations.default" ng-transclude></div>'
+      '<div ng-repeat="field in fields" ng-messages="field.$error" '+
+      'ng-messages-include="validations.default" ng-transclude></div>'
   };
 });
 
@@ -410,7 +411,8 @@ angular.module('myApp')
     },
     transclude: true,
     template:
-      '<div ng-repeat="field in fields" ng-messages="field.$error" ng-messages-include="validations.default" ng-transclude></div>'
+      '<div ng-repeat="field in fields" ng-messages="field.$error" '+
+      'ng-messages-include="validations.default" ng-transclude></div>'
   };
 });
 ```
