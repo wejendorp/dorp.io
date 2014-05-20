@@ -21,7 +21,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Open Sans', sans-serif;
   font-size: 100%;
-  margin-bottom: 1em;
+  margin: 1em 0;
 }
 
 h1 {
@@ -30,6 +30,7 @@ h1 {
 h2 {
   font-size: 16px;
 }
+
 
 p { margin: 1em 0; }
 
@@ -61,7 +62,7 @@ a:hover   { color: #000; text-decoration: underline;}
   /*margin-bottom: 32px;*/
 }
 .card .content {
-  margin: 0 0 0 152px;
+  margin: 0 0 0 140px;
 }
 .card .content p:first-child {
   margin-top: 0;
@@ -129,9 +130,6 @@ h1 + p.meta {
 .header {
   /*background: #fafafa;*/
   border-bottom: 1px solid #f3f3f3;
-  position: absolute;
-  width: 100%;
-  top: 0;
   min-height: 1px;
   line-height: 48px;
 }
@@ -141,7 +139,7 @@ h1 + p.meta {
 .header .title {
   font-family: 'Open Sans', sans-serif;
   float: left;
-  width: 152px;
+  width: 140px;
   text-align: center;
   color: #a00;
   font-size: 22px;
@@ -175,10 +173,6 @@ h1 + p.meta {
   color: #8085C1;
 }
 
-.content {
-  margin-top: 60px;
-}
-
 
 /*****************************************************************************/
 /*
@@ -200,6 +194,7 @@ pre {
   background-color: #fafafa;
   padding: 6px 10px;
   margin: 16px 0;
+  overflow-x: auto;
 }
 
 code {

@@ -22,9 +22,9 @@ Lets break it down by going through [the source](https://github.com/angular/angu
 
 ### deferred:
 * [deferred.resolve](https://github.com/angular/angular.js/blob/35e53ca649c60a27272cac38e4e9d686fb0c74f2/src/ng/q.js#L207-L223)
-  uses `then`.
+  uses `promise.then`.
 * [deferred.reject](https://github.com/angular/angular.js/blob/35e53ca649c60a27272cac38e4e9d686fb0c74f2/src/ng/q.js#L226-L228)
-  uses `resolve`
+  uses `deferred.resolve`
 * [deferred.notify](https://github.com/angular/angular.js/blob/35e53ca649c60a27272cac38e4e9d686fb0c74f2/src/ng/q.js#L231-L245)
   does not use promises.
 
