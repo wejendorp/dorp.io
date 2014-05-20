@@ -58,8 +58,8 @@ angular.module('myApp').config(function($provide) {
     // Extend promises with non-returning handlers
     function decoratePromise(promise) {
       promise._then = promise.then;
-      promise.then = function(thenFn, errFn) {
-        var p = promise._then(thenFn, errFn);
+      promise.then = function(thenFn, errFn, notifyFn) {
+        var p = promise._then(thenFn, errFn, notifyFn);
         return decoratePromise(p);
       };
 
