@@ -16,6 +16,8 @@ by design the `defer` function used internally in Angular cannot be modified.
 Since we can affect the first returned promise we have our way in. Now to make
 sure we stay "in".
 
+<!--more-->
+
 Lets break it down by going through [the source](https://github.com/angular/angular.js/blob/master/src/ng/q.js).
 
 ### deferred:

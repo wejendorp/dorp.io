@@ -27,7 +27,7 @@ title: Jacob Wejendorp
   <h2>Recent Posts</h2>
   <ul class="posts">
     {% for post in site.posts limit:5 %}
-      <li>
+      <li class="post">
         <h1><a href="{{ post.url }}">{{ post.title }}</a></h1>
         <p class="meta">{{ post.date | date: '%b %d %Y' }}</p>
         {{post.excerpt}}
