@@ -4,12 +4,19 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <title>{{ page.title }} - {{ site.name }}</title>
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@wejendorp" />
+  <meta name="twitter:creator" content="@wejendorp" />
+
   <meta name="keywords" content="{{site.keywords | join: ','}}" />
 
   {% if page.description %}
     <meta name="description" content="{{ page.description | truncatewords: 200 | strip_newlines | escape_once }}" />
+    <meta name="twitter:description" content="{{ page.description | truncatewords: 200 | strip_newlines | escape_once }}">
   {% else %}
     <meta name="description" content="{{ content | strip_html | truncatewords: 200 | strip_newlines | escape_once }}" />
+    <meta name="twitter:description" content="{{ content | strip_html | truncatewords: 200 | strip_newlines | escape_once }}">
   {% endif %}
 
   {% if page.date %}
@@ -18,9 +25,7 @@
   {% endif %}
   <meta property="og:title" content="{{ page.title }}" />
   <meta property="og:url" content="{{ site.url }}{{ page.url }}" />
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:site" content="@wejendorp">
-  <meta name="twitter:creator" content="@wejendorp">
+
 
   <meta name="viewport" content="width=device-width">
 
