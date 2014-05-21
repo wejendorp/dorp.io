@@ -35,16 +35,18 @@ Lets break it down by going through [the source](https://github.com/angular/angu
   uses `deferred.reject` and `deferred.resolve`.
 
 ### `$q` methods:
+  `$q.defer` is our normal point of entry.
 * [$q.reject](https://github.com/angular/angular.js/blob/35e53ca649c60a27272cac38e4e9d686fb0c74f2/src/ng/q.js#L384-L388)
-  uses `deferred.reject`.
+  uses the internal `defer`
 * [$q.when](https://github.com/angular/angular.js/blob/35e53ca649c60a27272cac38e4e9d686fb0c74f2/src/ng/q.js#L421-L467)
-  uses a mix of `deferred.resolve` and `promise.then`.
+  uses the internal `defer`.
 * [$q.all](https://github.com/angular/angular.js/blob/35e53ca649c60a27272cac38e4e9d686fb0c74f2/src/ng/q.js#L495-L517)
-  uses `deferred.resolve`, `deferred.reject` and `promise.then`.
+  uses the internal `defer`.
 
-So it seems everything falls back on `promise.then`.
+It all comes down to the functions that produce a new "internal" promise via `defer`.
 
-By hooking into `then`,
+
+By hooking into `then`, `reject`, `when` and `all`,
 and decorating every created promise before returning it, we should
 never have to encounter another non-decorated promise.
 
@@ -78,11 +80,26 @@ angular.module('myApp').config(function($provide) {
       return promise;
     }
 
-    var defer = $delegate.defer;
+    var defer = $delegate.defer,
+        when = $delegate.when,
+        reject = $delegate.reject,
+        all = $delegate.all;
     $delegate.defer = function() {
       var deferred = defer();
       decoratePromise(deferred.promise);
       return deferred;
+    };
+    $delegate.when = function() {
+      var p = when.apply(this, arguments);
+      return decoratePromise(p);
+    };
+    $delegate.reject = function() {
+      var p = reject.apply(this, arguments);
+      return decoratePromise(p);
+    };
+    $delegate.all = function() {
+      var p = all.apply(this, arguments);
+      return decoratePromise(p);
     };
 
     return $delegate;
