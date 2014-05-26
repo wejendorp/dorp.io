@@ -54,58 +54,7 @@ never have to encounter another non-decorated promise.
 For our purposes, lets add non-intercepting callbacks like the ones found on
 [$http](https://github.com/angular/angular.js/blob/35e53ca649c60a27272cac38e4e9d686fb0c74f2/src/ng/http.js#L654-L666).
 
-```js
-angular.module('myApp').config(function($provide) {
-  $provide.decorator('$q', function($delegate) {
-    // Extend promises with non-returning handlers
-    function decoratePromise(promise) {
-      promise._then = promise.then;
-      promise.then = function(thenFn, errFn, notifyFn) {
-        var p = promise._then(thenFn, errFn, notifyFn);
-        return decoratePromise(p);
-      };
-
-      promise.success = function (fn) {
-        promise.then(function (value) {
-          fn(value);
-        });
-        return promise;
-      };
-      promise.error = function (fn) {
-        promise.then(null, function (value) {
-          fn(value);
-        });
-        return promise;
-      };
-      return promise;
-    }
-
-    var defer = $delegate.defer,
-        when = $delegate.when,
-        reject = $delegate.reject,
-        all = $delegate.all;
-    $delegate.defer = function() {
-      var deferred = defer();
-      decoratePromise(deferred.promise);
-      return deferred;
-    };
-    $delegate.when = function() {
-      var p = when.apply(this, arguments);
-      return decoratePromise(p);
-    };
-    $delegate.reject = function() {
-      var p = reject.apply(this, arguments);
-      return decoratePromise(p);
-    };
-    $delegate.all = function() {
-      var p = all.apply(this, arguments);
-      return decoratePromise(p);
-    };
-
-    return $delegate;
-  });
-});
-```
+<script src="https://gist.github.com/wejendorp/22f05286426ccc0c723b.js"></script>
 
 With this configuration block in place, all promises in your application will
 be able to listen in on the promise value without modifying it, using
