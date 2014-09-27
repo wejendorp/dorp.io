@@ -1,0 +1,77 @@
+==================================================================
+https://keybase.io/wejendorp
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://dorp.io
+  * I am wejendorp (https://keybase.io/wejendorp) on keybase.
+  * I have a public key with fingerprint 11E7 673B 7CBD BA7E F695  F5D4 41A3 CA3F EA79 584B
+
+To claim this, I am signing this object:
+
+{
+    "body": {
+        "client": {
+            "name": "keybase.io node.js client",
+            "version": "0.7.2"
+        },
+        "key": {
+            "fingerprint": "11e7673b7cbdba7ef695f5d441a3ca3fea79584b",
+            "host": "keybase.io",
+            "key_id": "41A3CA3FEA79584B",
+            "uid": "96b5b695df4ae11488a98ae18dcb4600",
+            "username": "wejendorp"
+        },
+        "merkle_root": {
+            "ctime": 1411810389,
+            "hash": "11c3b599cb352affc8c40322463dc9a4845ef757d1f0d91bcb3630e762be4b0abc1e2e3d18f788ed5949e8001d5ef3190a15cd366c023b7a46a021c00584429e",
+            "seqno": 63311
+        },
+        "service": {
+            "hostname": "dorp.io",
+            "protocol": "http:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1411810473,
+    "expire_in": 157680000,
+    "prev": "e9c677839a98c24dd1eedf18e302fd192879fac391c882abf9f60ea8b2fa6d38",
+    "seqno": 10,
+    "tag": "signature"
+}
+
+with the aforementioned key, yielding the PGP signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: GnuPG/MacGPG2 v2.0.22 (Darwin)
+Comment: GPGTools - https://gpgtools.org
+
+owFVkltoHUUYx89Ja02CFmu1QW1I2EpbJYaZndmdmVNLOQ09RfPQgDek0MNcvk02
+TXaPezZpwjEQTbz2wQuFNgaUNlCJ1uKtD1pEHwpV46UVFB+aSDS2FCyKRVBBdPY0
+on2by//7f9/vP/P89Styzfmmty9/eOKPGZWfu6hy92+cnK05KjajTqHm6IEQojRb
+RXIQnIKzF0aVrEJnGLdHsYHO/mr7sqbDGYakGsaRVaFO1uk6Yx2ZPCsOwqgXkkoS
+Zl4OxsB8RhTTyijJIPCFF3iGUiyJliQAyYTHqbKWfXE1vaqrU/csh8aeUlwkXUVS
+2lGs67fbu6H6hfCVp6ypCagEjCnnUnC74kYr6iOUCauQLCPtg36ITJxUsoEHIdk7
+AOUkjuvUOg0zDaYYc4wIF3YkWe2rQ2iiPCG0Ip4rg0BzTRFxXeoTo4WknHoQMI8Z
+HCAjsLI6nyAL7iqgCkmlMbhADOYB4xyMJ6gAjhA2to5ggST2tCG+r5Fro5LUl8jF
+GiFLSl0BlqEKj0SxU/AJwXgs2ybDoYZs7Cy2ZboM7EpulSROYx0P2MO+NK0UMtx0
+tHIlAlWul89qKKswMva9/v+gmf3VUVBGOhwYqYQJlMNM4THfTo9Q1geGrScI7TPG
+ibDZa5cagwFMgDkQ5AYGC5czEUhNBNacu1IFIvARSK7cQPqG8P8AsTVNZa/1rIa9
+kUyHEnDGnsmvX5nLN+dWXdOQfdlcc9MN//5jVrr273tav7/166e3bF7RdGKNGD+6
+77k90zPHVGu049Ef+3ZtVUfOk20f/BmwePiSm58eHCEftZ0udV1Y/KSg7932OF84
+XPtp5tuTG3Hbute6JsZfb9ny0nE5PXjf5Pvt+513f9vZ3r3hhfDLmw9umt/1Azn0
+8+8l2pLf/arqUf34QM/8d4tT8tRna1ff9MUvd22eXNnavTDx8dH1jWxq7aqn5paS
+pjVLi268MP3mKxdm78g1z4/nzrU9ePe6Qk93aerZt84WfzVb564buvGBI2eccstl
+hzc0tv71ztItSy/f/mLtof5LxVrDnXtOvXH60/dGzq/+6tzF7onHju9s9Ec2bHqS
+1Sae+ObA5w/fdmzyHw==
+=eyYw
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/wejendorp
+
+==================================================================
