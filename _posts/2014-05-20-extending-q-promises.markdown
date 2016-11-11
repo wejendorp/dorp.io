@@ -2,7 +2,7 @@
 layout: post
 title:  "Extending $q promises in Angular"
 date:   2014-05-20 08:54:00
-categories: blog
+tags: 	angular promises q
 ---
 
 ## Why another post about this?
@@ -16,7 +16,7 @@ by design the `defer` function used internally in Angular cannot be modified.
 Since we can affect the first returned promise we have our way in. Now to make
 sure we stay "in".
 
-<!--more-->
+
 
 Lets break it down by going through [the source](https://github.com/angular/angular.js/blob/master/src/ng/q.js).
 
@@ -54,7 +54,58 @@ never have to encounter another non-decorated promise.
 For our purposes, lets add non-intercepting callbacks like the ones found on
 [$http](https://github.com/angular/angular.js/blob/35e53ca649c60a27272cac38e4e9d686fb0c74f2/src/ng/http.js#L654-L666).
 
-<script src="https://gist.github.com/wejendorp/22f05286426ccc0c723b.js"></script>
+```js
+angular.module('myApp').config(function($provide) {
+  $provide.decorator('$q', function($delegate) {
+    // Extend promises with non-returning handlers
+    function decoratePromise(promise) {
+      promise._then = promise.then;
+      promise.then = function(thenFn, errFn, notifyFn) {
+        var p = promise._then(thenFn, errFn, notifyFn);
+        return decoratePromise(p);
+      };
+
+      promise.success = function (fn) {
+        promise.then(function (value) {
+          fn(value);
+        });
+        return promise;
+      };
+      promise.error = function (fn) {
+        promise.then(null, function (value) {
+          fn(value);
+        });
+        return promise;
+      };
+      return promise;
+    }
+
+    var defer = $delegate.defer,
+        when = $delegate.when,
+        reject = $delegate.reject,
+        all = $delegate.all;
+    $delegate.defer = function() {
+      var deferred = defer();
+      decoratePromise(deferred.promise);
+      return deferred;
+    };
+    $delegate.when = function() {
+      var p = when.apply(this, arguments);
+      return decoratePromise(p);
+    };
+    $delegate.reject = function() {
+      var p = reject.apply(this, arguments);
+      return decoratePromise(p);
+    };
+    $delegate.all = function() {
+      var p = all.apply(this, arguments);
+      return decoratePromise(p);
+    };
+
+    return $delegate;
+  });
+});
+```
 
 With this configuration block in place, all promises in your application will
 be able to listen in on the promise value without modifying it, using

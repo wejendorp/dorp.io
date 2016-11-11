@@ -2,7 +2,7 @@
 layout: post
 title:  "Form validation with rcSubmit and bootstrap"
 date:   2014-05-12 23:42:43
-categories: blog
+tags: 	angular validation rcSubmit bootstrap
 ---
 
 I have long been annoyed with doing form validations in Angular, it just never
@@ -30,7 +30,7 @@ feels too repetitive.
 If we make a few assumptions on form structure this can easily be avoided with
 a few directives.
 
-<!--more-->
+
 
 ## Too much template logic, too repetitive
 With even simple validations, there is much too much logic written in markup.

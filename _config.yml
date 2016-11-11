@@ -1,7 +1,68 @@
-name: dorp.io
-keywords: "angular, javascript, nodejs, algorithms, computer science"
-permalink: none
-markdown: redcarpet
-pygments: true
-excerpt_separator: <!--more-->
 encoding: utf-8
+markdown: kramdown
+highlighter: rouge
+
+excerpt_separator: "\n\n\n"
+permalink:   /posts/:title/
+
+# Handling Reading
+exclude: [Gemfile, README.md]
+
+# Plugins
+gems:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-seo-tag
+
+collections:
+  my_categories:
+    output: true
+    permalink: /blog/category/:name/
+  my_tags:
+    output: true
+    permalink: /blog/tag/:name/
+
+defaults:
+  -
+    scope:
+      path: ""
+      type: pages
+    values:
+      layout: page
+  -
+    scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+  -
+    scope:
+      path: ""
+      type: my_categories
+    values:
+      layout: blog_by_category
+  -
+    scope:
+      path: ""
+      type: my_tags
+    values:
+      layout: blog_by_tag
+  -
+    scope:
+      path: "project"
+    values:
+      layout: project
+
+# Custom
+domain: dorp.io
+url: http://www.dorp.io
+title: dorp.io
+description: Portfolio website of Stephan Groß
+copyright: 2013&mdash;2016
+name: dorp
+author: wejendorp
+twitter:
+  username: wejendorp
+github:
+  username: wejendorp

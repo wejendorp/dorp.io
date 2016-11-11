@@ -197,15 +197,15 @@ pre {
   overflow-x: auto;
 }
 
-code {
-  border: 1px solid #ddd;
-  background-color: #fafafa;
-  padding: 0 .2em;
-}
+// code {
+//   border: 1px solid #ddd;
+//   background-color: #fafafa;
+//   padding: 0 .2em;
+// }
 
-pre code {
-  border: none;
-}
+// pre code {
+//   border: none;
+// }
 
 /* terminal */
 .post pre.terminal {

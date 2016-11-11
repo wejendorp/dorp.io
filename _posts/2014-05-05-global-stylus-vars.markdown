@@ -2,7 +2,7 @@
 layout: post
 title:  "Global stylus variables with grunt-stylus"
 date:   2014-05-05 22:47:03
-categories: blog
+tags: 	stylus grunt
 ---
 
 [Stylus](http://learnboost.github.io/stylus/) is a CSS preprocessor that enables
@@ -15,14 +15,14 @@ be accessible in all your stylus files. Perhaps even included by default, saving
 your the trouble of writing
 
 ```css
-@import 'nib'
-@import '../my/helpers'
+@import 'nib';
+@import '../my/helpers';
 ```
 
 In all your files.
 Dont worry, `grunt-stylus` has you covered.
 
-<!--more-->
+
 
 ## Path madness
 Your stylus `@import` statements should be path independent.
@@ -74,13 +74,13 @@ Stylus works like your average web server, looking for `index.styl` in any folde
 your try and import. This means you can have all your styles loaded by doing
 `@import 'myStyles'`, if your `index.styl` file imports all its siblings.
 
-<pre>
+```
 ./myStyles
   |-- index.styl
   |-- vendor.styl
   |-- buttons.styl
   |-- images.styl
-</pre>
+```
 
 Combine this with the import option array, and keep your styles organized and
 automatically loaded.

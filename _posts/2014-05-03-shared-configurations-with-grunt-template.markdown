@@ -2,7 +2,7 @@
 layout: post
 title:  "Shared configurations with grunt-template"
 date:   2014-05-03 16:48:30
-categories: blog
+tags: 	grunt
 ---
 
 At [Mojn](http://mojn.com) we needed a way to write a reduced version of our server-side environment as an
@@ -13,7 +13,7 @@ for interesting tasks. Grunt-template is a simple task designed to pass any data
 [underscore template](http://underscorejs.org/#template) file, and write the result to another file.
 That's perfect! Now let's write some templates and configure grunt-template.</section>
 
-<!--more-->
+
 
 ## Angular modules
 What if we could just define angular modules as `{myModule: {myValue: 'Some value'}}`?
