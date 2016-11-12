@@ -1,8 +1,9 @@
 ---
-layout: post
-title:  "Shared configurations with grunt-template"
-date:   2014-05-03 16:48:30
-tags: 	grunt
+title: "Shared configurations with grunt-template"
+tags: [grunt]
+redirect_from:
+  - /2014/05/shared-configurations-with-grunt-template/
+  - /blog/shared-configurations-with-grunt-template/
 ---
 
 At [Mojn](http://mojn.com) we needed a way to write a reduced version of our server-side environment as an
@@ -84,7 +85,7 @@ That should make a variable for every value in `stylus.variables`, passed to the
 Now we just need to pass an object, `{stylus: {variables: { ... }}}` to the
 task and point to the newly created template.
 
-```js
+```json
 // colors.json
 {
   "blue": "#00F",

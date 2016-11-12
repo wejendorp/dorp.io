@@ -1,8 +1,9 @@
 ---
-layout: post
 title:  "Extending $q promises in Angular"
-date:   2014-05-20 08:54:00
-tags: 	angular promises q
+tags:   [angular, promises]
+redirect_from:
+  - /2014/05/extending-q-promises/
+  - /blog/extending-q-promises/
 ---
 
 ## Why another post about this?

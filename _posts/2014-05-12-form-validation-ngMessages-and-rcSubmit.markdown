@@ -1,8 +1,9 @@
 ---
-layout: post
-title:  "Form validation with rcSubmit and bootstrap"
-date:   2014-05-12 23:42:43
-tags: 	angular validation rcSubmit bootstrap
+title: "Form validation with rcSubmit and bootstrap"
+tags: [angular, validation, bootstrap]
+redirect_from:
+  - /2014/05/form-validation-ngMessages-and-rcSubmit/
+  - /blog/form-validation-ngMessages-and-rcSubmit/
 ---
 
 I have long been annoyed with doing form validations in Angular, it just never

@@ -1,8 +1,9 @@
 ---
-layout: post
-title:  "Global stylus variables with grunt-stylus"
-date:   2014-05-05 22:47:03
-tags: 	stylus grunt
+title: "Global stylus variables with grunt-stylus"
+tags: [stylus, grunt]
+redirect_from:
+  - /2014/05/global-stylus-vars/
+  - /blog/global-stylus-vars/
 ---
 
 [Stylus](http://learnboost.github.io/stylus/) is a CSS preprocessor that enables

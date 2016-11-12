@@ -25,10 +25,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: 22px;
+  font-size: 150%;
 }
 h2 {
-  font-size: 16px;
+  font-size: 130%;
+}
+h3, h4 {
+  font-size: 120%
 }
 
 
@@ -197,23 +200,13 @@ pre {
   overflow-x: auto;
 }
 
-// code {
-//   border: 1px solid #ddd;
-//   background-color: #fafafa;
-//   padding: 0 .2em;
+// /* terminal */
+// .post pre.terminal {
+//   border: 1px solid #000;
+//   background-color: #333;
+//   color: #FFF;
 // }
 
-// pre code {
-//   border: none;
+// .post pre.terminal code {
+//   background-color: #333;
 // }
-
-/* terminal */
-.post pre.terminal {
-  border: 1px solid #000;
-  background-color: #333;
-  color: #FFF;
-}
-
-.post pre.terminal code {
-  background-color: #333;
-}
