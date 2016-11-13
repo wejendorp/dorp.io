@@ -1,5 +1,6 @@
 ---
 title: "Shared configurations with grunt-template"
+category: programming
 tags: [grunt]
 redirect_from:
   - /2014/05/shared-configurations-with-grunt-template/

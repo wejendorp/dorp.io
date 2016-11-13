@@ -1,6 +1,7 @@
 ---
 title: "Form validation with rcSubmit and bootstrap"
-tags: [angular, validation, bootstrap]
+category: programming
+tags: [angular, validation]
 redirect_from:
   - /2014/05/form-validation-ngMessages-and-rcSubmit/
   - /blog/form-validation-ngMessages-and-rcSubmit/

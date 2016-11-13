@@ -1,6 +1,7 @@
 ---
 title: "Global stylus variables with grunt-stylus"
-tags: [stylus, grunt]
+category: programming
+tags: [grunt]
 redirect_from:
   - /2014/05/global-stylus-vars/
   - /blog/global-stylus-vars/

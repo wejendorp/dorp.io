@@ -1,0 +1,35 @@
+{% assign post = include.post %}
+
+{% assign tags_content = "" %}
+{% assign category = site.my_categories | where: "slug", post.category %}
+{% assign category = category[0] %}
+{% if category %}
+  {% capture category_content %}<a class="label" href="{{ category.url }}" style="background-color:{{ category.color }}">{{ category.name }}</a>{% endcapture %}
+{% endif %}
+
+{% if post.tags.size > 0 %}
+	{% assign tags = "" | split: "|" %}
+
+  {% for post_tag in post.tags %}
+    {% assign tag = site.my_tags | where: "slug", post_tag %}
+    {% if tag %}
+      {% assign tag = tag[0] %}
+      {% capture tags_content_temp %}{{ tags_content }}<a href="{{ tag.url }}">{{ tag.name }}</a>{% endcapture %}
+      {% assign tags = tags | push: tags_content_temp %}
+    {% endif %}
+  {% endfor %}
+  {% capture tags_content %}{{ tags | join: ", " }}{% endcapture %}
+{% endif %}
+
+<p class="m-t-3 text-muted font-italic">
+  <small>Posted
+    <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%b. %d, %Y' }}</time>
+		{% if category_content %} in
+			</small>
+				{{ category_content }}
+			<small>
+		{% endif %}
+		{{ tags_content }}
+	</small>
+  <a class="pull-right" href="{{ post.url }}#disqus_thread">comments</a>
+</p>

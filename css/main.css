@@ -40,6 +40,36 @@ p { margin: 1em 0; }
 a         { color: #00e; text-decoration: none;}
 a:hover   { color: #000; text-decoration: underline;}
 
+ul, ol {
+  margin-left: 1.35em;
+}
+
+ul.vsp li {
+	margin-bottom: 1em;
+}
+
+.text-muted {
+	color: #aaa;
+}
+
+.label {
+	background: #eee;
+	border: 1px solid #ccc;
+	font-size: 90%;
+	padding: 4px 8px;
+}
+
+.title h1 {
+	margin-bottom: 0.5em;
+}
+.title p {
+	margin-top: 0.5em;
+}
+
+.pull-right {
+	float: right;
+}
+
 .share {
   margin: 20px;
   text-align: center;
@@ -57,22 +87,25 @@ a:hover   { color: #000; text-decoration: underline;}
   color: inherit;
 }
 
-.card {
+.vcard {
   /*border-top: 2px solid #fafafa;*/
   border-bottom: 2px solid #fafafa;
   padding: 16px;
   border-radius: 3px;
   /*margin-bottom: 32px;*/
 }
-.card .content {
-  margin: 0 0 0 140px;
-}
-.card .content *:first-child {
+.vcard .content *:first-child {
   margin-top: 0;
 }
-.card .content p:last-child {
+.vcard .content p:last-child {
   margin-bottom: 0;
 }
+
+.card {
+	margin-bottom: 40px;
+}
+
+
 .clearfix:after {
   content: "";
   display: table;
@@ -91,10 +124,15 @@ a:hover   { color: #000; text-decoration: underline;}
 }
 
 
-img.profile {
+img.gravatar {
   float: left;
   width: 120px;
   border-radius: 60px;
+  margin: 0 40px 40px 8px;
+}
+
+.gravatar.vsp {
+	margin-top: 20px;
 }
 
 /*****************************************************************************/
@@ -104,7 +142,7 @@ img.profile {
 /*****************************************************************************/
 
 .container {
-  width: 760px;
+  width: 40rem;
   margin: 0 auto;
 }
 
@@ -113,11 +151,12 @@ img.profile {
     width: auto;
     padding: 0 16px;
   }
-  img.profile {
+  img.gravatar {
     display: block;
     float: none;
+    margin: 0 auto 40px;
   }
-  .card .content {
+  .vcard .content {
     margin: 0;
   }
 }
@@ -130,16 +169,16 @@ h1 + p.meta {
   margin-top: -11px;
 }
 
-.header {
+.navbar {
   /*background: #fafafa;*/
   border-bottom: 1px solid #f3f3f3;
   min-height: 1px;
   line-height: 48px;
 }
-.header * {
+.navbar * {
   margin-bottom: 0;
 }
-.header .title {
+.navbar .title {
   font-family: 'Open Sans', sans-serif;
   float: left;
   width: 140px;
@@ -148,34 +187,23 @@ h1 + p.meta {
   font-size: 22px;
 }
 
-.header a:hover {
+.navbar a:hover {
   background-color: #fafafa;
   text-decoration: none;
 }
 
-.header ul {
+.navbar ul {
   list-style-type: none;
   float: left;
 }
-.header ul li {
+.navbar ul li {
   display: inline-block;
 }
-.header ul li a {
+.navbar ul li a {
   display: block;
   padding: 0 16px;
   color:   #333;
 }
-
-
-.header .contact {
-  border-top: 1px solid #fafafa;
-  padding-top: 16px;
-}
-
-.header .contact a {
-  color: #8085C1;
-}
-
 
 /*****************************************************************************/
 /*
@@ -188,10 +216,6 @@ h1 + p.meta {
   margin-bottom: 48px;
 }
 
-.post ul, .post ol {
-  margin-left: 1.35em;
-}
-
 pre {
   border-left: 1px solid #ddd;
   background-color: #fafafa;
@@ -200,13 +224,10 @@ pre {
   overflow-x: auto;
 }
 
-// /* terminal */
-// .post pre.terminal {
-//   border: 1px solid #000;
-//   background-color: #333;
-//   color: #FFF;
-// }
-
-// .post pre.terminal code {
-//   background-color: #333;
-// }
+.pagination {
+	margin: 0 auto;
+	text-align: center;
+}
+.pagination > * {
+	margin: auto 8px;
+}

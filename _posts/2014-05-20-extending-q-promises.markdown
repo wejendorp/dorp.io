@@ -1,12 +1,13 @@
 ---
 title:  "Extending $q promises in Angular"
-tags:   [angular, promises]
+category: programming
+tags: [angular, promises]
 redirect_from:
   - /2014/05/extending-q-promises/
   - /blog/extending-q-promises/
 ---
 
-## Why another post about this?
+**Why another post about this?**
 Most implementations seem to overlook the fact that the changes applied to
 `delegate.defer` only affect the first promise in the chain, since
 by design the `defer` function used internally in Angular cannot be modified.

@@ -1,0 +1,41 @@
+---
+title: Thoughts were had
+subtitle: All posts
+---
+
+{% if paginator.posts %}
+  {% for post in paginator.posts %}
+    {% assign category = site.my_categories | where: "slug", post.category %}
+    {% assign category = category[0] %}
+
+    <div class="card m-b-2">
+      <div class="card-block">
+        <h3 class="card-title">{{ post.title }}</h3>
+        <div class="card-text">{{ post.excerpt }}</div>
+      </div>
+      <div class="card-footer clearfix">
+        <small class="pull-xs-left text-muted">Posted <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%b. %d, %Y' }}</time> in&nbsp;</small>
+        <a class="pull-xs-left label" href="{{ category.url }}" style="background-color:{{ category.color }}">{{ category.name }}</a>
+        <small><a class="pull-right" href="{{ post.url }}">Read more</a></small>
+      </div>
+    </div>
+  {% endfor %}
+{% else %}
+  <p>No posts found.</p>
+{% endif %}
+
+<div class="pagination">
+  {% if paginator.previous_page %}
+    <a href="{{ paginator.previous_page_path }}" class="previous">Previous</a>
+  {% else %}
+    <span class="previous">Previous</span>
+  {% endif %}
+  <span class="page_number ">Page: {{ paginator.page }} of {{ paginator.total_pages }}</span>
+  {% if paginator.next_page %}
+    <a href="{{ paginator.next_page_path }}" class="next">Next</a>
+  {% else %}
+    <span class="next ">Next</span>
+  {% endif %}
+</div>
+
+<script id="dsq-count-scr" src="//jacobwejendorp.disqus.com/count.js" async></script>
