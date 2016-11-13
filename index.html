@@ -8,13 +8,10 @@ title: Thoughts on were had
 {% if site.posts.size > 0 %}
   <div class="list-group">
     {% for post in site.posts limit: 5 %}
-      <a href="{{ post.url }}" class="list-group-item">
-        <h4 class="list-group-item-heading h6">{{ post.title }}</h4>
-      </a>
-    	{% include post_info.html post=post %}
+    	{% include post_list_item.html post=post %}
     {% endfor %}
   </div>
-  <p class="text-xs-right m-t-1 m-b-0"><a href="/blog/">more ➟</a></p>
+  <p class="center"><a href="/blog/">more ➟</a></p>
 {% else %}
   <p>No posts found.</p>
 {% endif %}

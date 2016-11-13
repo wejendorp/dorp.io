@@ -8,16 +8,13 @@ subtitle: All posts
     {% assign category = site.my_categories | where: "slug", post.category %}
     {% assign category = category[0] %}
 
-    <div class="card m-b-2">
+    <div class="list-group-item">
       <div class="card-block">
-        <h3 class="card-title">{{ post.title }}</h3>
+        <a href="{{ post.url }}"><h3 class="card-title">{{ post.title }}</h3></a>
         <div class="card-text">{{ post.excerpt }}</div>
+        <small><a href="{{ post.url }}">Read more</a></small>
       </div>
-      <div class="card-footer clearfix">
-        <small class="pull-xs-left text-muted">Posted <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%b. %d, %Y' }}</time> in&nbsp;</small>
-        <a class="pull-xs-left label" href="{{ category.url }}" style="background-color:{{ category.color }}">{{ category.name }}</a>
-        <small><a class="pull-right" href="{{ post.url }}">Read more</a></small>
-      </div>
+      {% include post_info.html post=post %}
     </div>
   {% endfor %}
 {% else %}

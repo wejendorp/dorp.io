@@ -1,3 +1,21 @@
---
+---
 layout: default
---
+---
+
+{% capture page_subtitle %}Posts by tag{% endcapture %}
+
+{% include title_header.html title=page.name subtitle=page_subtitle %}
+
+<div class="list-group">
+  {% if site.tags[page.slug] %}
+    {% for post in site.tags[page.slug] %}
+	    {% include post_list_item.html post=post %}
+    {% endfor %}
+
+    <script id="dsq-count-scr" src="//jacobwejendorp.disqus.com/count.js" async></script>
+  {% else %}
+    <p>There are no posts in this category.</p>
+  {% endif %}
+</div>
+
+<script id="dsq-count-scr" src="//jacobwejendorp.disqus.com/count.js" async></script>

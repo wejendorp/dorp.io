@@ -1,0 +1,9 @@
+{% assign post = include.post %}
+
+<div class="list-group-item">
+	<a href="{{ post.url }}" class="list-group-item">
+	  <h4 class="list-group-item-heading h6">{{ post.title }}</h4>
+	</a>
+
+	{% include post_info.html post=post %}
+</div>

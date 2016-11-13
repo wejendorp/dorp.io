@@ -14,14 +14,14 @@ html, body { height: 100%; }
 
 body {
   background-color: #FFF;
-  font: 15px Helvetica, Arial, sans-serif;
+  font: 15px 'Source Sans Pro', sans-serif;
   line-height: 1.7em;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Open Sans', sans-serif;
   font-size: 100%;
   margin: 1em 0;
+  font-weight: normal;
 }
 
 h1 {
@@ -83,16 +83,14 @@ ul.vsp li {
   list-style-type: none;
   margin-bottom: 2em;
 }
-.posts h1 a {
+h1 a {
   color: inherit;
 }
 
 .vcard {
-  /*border-top: 2px solid #fafafa;*/
-  border-bottom: 2px solid #fafafa;
+  border-bottom: 2px solid #f3f3f3;
   padding: 16px;
   border-radius: 3px;
-  /*margin-bottom: 32px;*/
 }
 .vcard .content *:first-child {
   margin-top: 0;
@@ -114,10 +112,12 @@ ul.vsp li {
 .bullets span {
   padding: 6px;
 }
-.bullets.center {
+.center {
   text-align: center;
-  padding: 32px;
+}
+.bullets {
   color: #999;
+	padding: 32px;
 }
 .bullets.center  a {
   color: #999;
@@ -135,6 +135,14 @@ img.gravatar {
 	margin-top: 20px;
 }
 
+.list-group-item {
+	padding-top: 1em;
+	border-bottom: 1px solid #f0f0f0;
+}
+.list-group-item h4 {
+	margin-top: 0;
+}
+
 /*****************************************************************************/
 /*
 /* Site
@@ -144,6 +152,9 @@ img.gravatar {
 .container {
   width: 40rem;
   margin: 0 auto;
+}
+.container.content {
+	padding-bottom: 40px;
 }
 
 @media(max-width: 792px) {
