@@ -13,7 +13,7 @@
 html, body { height: 100%; }
 
 body {
-  background-color: #FFF;
+  background-color: #EFEFEF;
   font: 15px 'Source Sans Pro', sans-serif;
   line-height: 1.7em;
 }
@@ -150,11 +150,13 @@ img.gravatar {
 /*****************************************************************************/
 
 .container {
-  width: 40rem;
+  width: 50rem;
   margin: 0 auto;
+  padding: 1rem;
 }
 .container.content {
 	padding-bottom: 40px;
+  background-color: #FFF;
 }
 
 @media(max-width: 792px) {
@@ -181,10 +183,11 @@ h1 + p.meta {
 }
 
 .navbar {
-  /*background: #fafafa;*/
+  background: #fafafa;
   border-bottom: 1px solid #f3f3f3;
   min-height: 1px;
   line-height: 48px;
+  margin-bottom: 2rem;
 }
 .navbar * {
   margin-bottom: 0;
@@ -227,11 +230,12 @@ h1 + p.meta {
   margin-bottom: 48px;
 }
 
-pre {
-  border-left: 1px solid #ddd;
-  background-color: #fafafa;
+.highlight {
+  border: solid #ddd;
+  border-width: 0 1px;
+  background-color: #333;
   padding: 6px 10px;
-  margin: 16px 0;
+  margin: 1rem -1rem;
   overflow-x: auto;
 }
 
