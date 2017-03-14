@@ -23,8 +23,10 @@ and [the source](https://github.com/realcrowd/angularjs-utilities/blob/master/sr
 With `rcSubmit` the state tracking and loading indicators are handled for us,
 but spamming my forms with
 
-```
-ng-class="{has-error: rc.form.needsAttention(form.field)}"
+```html
+<div ng-class="{has-error: rc.form.needsAttention(form.field)}">
+  ...
+</div>
 ```
 
 feels too repetitive.
