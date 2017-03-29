@@ -37,8 +37,8 @@ h3, h4 {
 
 p { margin: 1em 0; }
 
-a         { color: #00e; text-decoration: none;}
-a:hover   { color: #000; text-decoration: underline;}
+a         { color: #0066ff; text-decoration: none;}
+a:hover   { color: #003366; text-decoration: underline;}
 
 ul, ol {
   margin-left: 1.35em;
@@ -158,6 +158,9 @@ img.gravatar {
 	padding-bottom: 40px;
   background-color: #FFF;
 }
+img {
+  max-width: 100%;
+}
 
 @media(max-width: 792px) {
   .container {
@@ -237,6 +240,7 @@ h1 + p.meta {
   padding: 6px 10px;
   margin: 1rem -1rem;
   overflow-x: auto;
+  tab-size: 2;
 }
 
 .pagination {
