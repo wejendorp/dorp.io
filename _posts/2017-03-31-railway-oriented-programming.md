@@ -18,6 +18,8 @@ what that means, I hope the Railway analogy will help you as it did me.
 Most functions that are doing external calls like HTTP requests, file system operations or runtime
 validation will have at least two different outputs: a success case and an error case.
 
+
+
 ```js
 function generateProfit() {
 	collectUnderpants()
@@ -65,6 +67,7 @@ function signup(req, res, next) {
 		})
 		// Main error track
 		.catch(error => {
+			//
 			if (error.error) { // debug info
 				console.error(error.error);
 			}

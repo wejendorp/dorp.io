@@ -39,6 +39,6 @@ You have decoupled the code, your IDE and any possibility of doing explorative d
 how it works.
 
 Working in a system of implicit dependencies can be extremely draining, since the effects of change
-are hidden behind layers of indirection and abstraction, and you get zero help from standard tooling.
+are hidden behind layers of indirection and abstraction. You get zero help from standard tooling.
 The less your tools can help you, the more mental capacity is needed to juggle the parts and their
-relationships. Even more so, to start changing these relationships, when requirements change.
+relationships. Even more so, to start changing these relationships when requirements inevitably change.
