@@ -37,7 +37,8 @@ function generateProfit() {
 
 By going with the railway analogy, we have an error track and a success track, or "the happy path".
 
-![alt](/assets/images/railway-1.png)
+<img src="/assets/images/railway-2.png" alt="Rails!" style="width: 250px;"/>
+
 Image sourced from [Railway Oriented Programming](https://fsharpforfunandprofit.com/rop/).
 
 With promises, I suppose the error track also works as a guard rail. No errors will escape the promise,
@@ -52,10 +53,6 @@ some static analysis help for those cases.
 
 # An Express(JS) Railway example!
 Consider each function a separate piece of railway. Validate will be the starting point.
-
-
-<img src="/assets/images/railway-2.png" alt="Rails!" style="width: 250px;"/>
-
 Consider this example signup route for an ExpressJS application:
 
 ```js
@@ -67,7 +64,7 @@ function signup(req, res, next) {
 		})
 		// Main error track
 		.catch(error => {
-			//
+			// The same error could have multiple representations:
 			if (error.error) { // debug info
 				console.error(error.error);
 			}
@@ -128,14 +125,22 @@ compose function for promise functions like so:
 
 ```js
 function compose(...fns) {
-	return x => fns.reduce(
-		(res, f) => res.then(f),
-		Promise.resolve(x)
+	return x => {
+		let res = Promise.resolve(x);
+		fns.forEach(f => {
+			res = res.then(f);
+		});
+		return res;
 	);
 }
 ```
+In standard terminology our compose function is normally called `pipe`, since it applies its
+functions from left to right, just like an unix pipe `ps | grep node`.
 
-which would let us define the flows as compositions:
+Pipe / compose lets us define the flow of data as a composition of `.then`s, which can now be
+considered a single piece of track:
+
+![alt](/assets/images/railway-1.png)
 
 ```js
 // req -> bool
@@ -155,10 +160,11 @@ If you feel like this is not enough, you can use regular composition and write f
 take promises in, and return promises. That way you can handle both rejection and resolve cases.
 
 ```js
+// Standard compose
 function composeAll(...fns) {
 	return x => fns.reduce(
 		(res, f) => f(res),
-		Promise.resolve(x)
+		x
 	);
 }
 const toReject = p => p.then(x => Promise.reject(x));
@@ -174,3 +180,15 @@ composeAll(
 	tap(console.log) // foo
 )(Promise.reject('foo'))
 ```
+
+With a more FP heavy approach, javascript could become much closer to the original concept with
+monads and pattern matching. Despite its shortcomings I still find the railway model a useful way to
+think about error handling with promise chains in Javascript.
+
+
+## References
+
+If you want to up your game you should check out some of the articles that inspired this post:
+
+* [Railway Oriented Programming](https://fsharpforfunandprofit.com/rop/)
+* [Extensible effects in Node](https://www.humblespark.com/blog/extensible-effects-in-node-part-1)
