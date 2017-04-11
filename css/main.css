@@ -8,12 +8,12 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 html, body { height: 100%; }
 
 body {
-  background-color: #EFEFEF;
   font: 15px 'Source Sans Pro', sans-serif;
   line-height: 1.7em;
 }
@@ -152,7 +152,7 @@ img.gravatar {
 .container {
   width: 50rem;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 1rem 3rem;
 }
 .container.content {
 	padding-bottom: 40px;
@@ -237,8 +237,8 @@ h1 + p.meta {
   border: solid #ddd;
   border-width: 0 1px;
   background-color: #333;
-  padding: 6px 10px;
-  margin: 1rem -1rem;
+  padding: 1rem 3rem;
+  margin: 1rem -3rem;
   overflow-x: auto;
   tab-size: 2;
 }
