@@ -11,7 +11,6 @@ express servers with plain node modules in the name of simplicity, my colleagues
 started complaining about no longer having server side reloading.
 But with this, developing on the server is back to its former glory!
 
-## Goal
 
 We'll focus on getting a single module, and all it's subdependencies to reload
 during development. Specifically, how to dynamically discover [express.Router](http://expressjs.com/en/api.html#express.router) modules and mount them with
@@ -20,7 +19,7 @@ reloading on an existing "normal" express server.
 If you're looking for a way to run your entire server through webpack, take a look at
 [Hot reload all the things!](https://hackernoon.com/hot-reload-all-the-things-ec0fed8ab0)
 
-## Webpack config
+# Webpack config
 
 Let's start out with a minimal `webpack.config.server.js`, that we'll use as an
 example. We want to run everything through [babel](https://babeljs.io/), to get
@@ -68,7 +67,7 @@ module.exports = {
 };
 ```
 
-## Autodiscovery with require contexts
+# Autodiscovery with require contexts
 
 The auto discovery loader could look something like this, before we add webpack:
 
@@ -139,7 +138,7 @@ module.exports = app => {
 };
 ```
 
-## HMR, require.context and express
+# HMR, require.context and express
 
 In order to reload the dynamic context, we must `hot.accept` it by id, and then
 re-evaluate the context. Then we can swap out the route handler in express, and
@@ -209,7 +208,7 @@ something like
 
 And the router should have been automatically swapped out.
 
-## A simple dev-server middleware
+# A simple dev-server middleware
 
 Having been spoiled by `webpack-dev-server` and `webpack-dev-middleware`, running
 `webpack --watch` on the side doesn't feel quite right. Luckily, we can use the
@@ -255,7 +254,7 @@ if (isDev) {
 app.listen(3000);
 ```
 
-## Source-maps for sanity and production
+# Source-maps for sanity and production
 
 To keep sane with transpiled code, we want source-maps in the node process itself.
 This is easily accomplished by making sure webpack config is set to
@@ -269,7 +268,7 @@ require('source-map-support').install({
 });
 ```
 
-## Conclusion
+# Conclusion
 We had to jump through a few hoops, but the server is happily compiling as
 needed and hot reloading during development.
 
