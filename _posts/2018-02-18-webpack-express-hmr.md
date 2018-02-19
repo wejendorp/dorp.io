@@ -11,6 +11,8 @@ express servers with plain node modules in the name of simplicity, my colleagues
 started complaining about no longer having server side reloading.
 But with this, developing on the server is back to its former glory!
 
+The purpose is to have only part of an express server work in this way, so that
+a module being required can update itself in place.
 
 We'll focus on getting a single module, and all it's subdependencies to reload
 during development. Specifically, how to dynamically discover [express.Router](http://expressjs.com/en/api.html#express.router) modules and mount them with
@@ -23,7 +25,8 @@ If you're looking for a way to run your entire server through webpack, take a lo
 
 Let's start out with a minimal `webpack.config.server.js`, that we'll use as an
 example. We want to run everything through [babel](https://babeljs.io/), to get
-that awesome `ES-2020` feature support into node.
+that awesome [`es2018`](http://2ality.com/2017/02/ecmascript-2018.html) feature
+support into node.
 
 ```js
 // webpack/webpack.config.server.js
@@ -35,6 +38,14 @@ const nodeExternals = require('webpack-node-externals');
 module.exports = {
 	entry: ['webpack/hot/poll?1000', './src/mount.webpack'],
 	target: 'node',
+	output: {
+		path: path.join(__dirname, '.build'),
+		filename: 'server.js'
+		// expose main method as:
+		library: 'mount',
+    // Build it as a commonjs library so we can include it
+		libraryTarget: 'commonjs'
+  },
 	// Don't bundle node_modules, they'll be available at runtime
 	externals: [
 		nodeExternals({
@@ -59,11 +70,7 @@ module.exports = {
 		new webpack.NamedModulesPlugin(),
 		new webpack.HotModuleReplacementPlugin(),
 		new webpack.NoEmitOnErrorsPlugin()
-	],
-	output: {
-		path: path.join(__dirname, '.build'),
-		filename: 'server.js'
-	}
+	]
 };
 ```
 
@@ -99,7 +106,7 @@ To be included in our express server like so:
 const express = require('express');
 const app = express();
 
-require('./.build/server')(app);
+require('./.build/server').mount(app);
 
 app.listen(3000);
 ```
@@ -159,7 +166,7 @@ In our server, we can use the callback to re-evaluate our routes, and mount a
 new Router instance into express:
 
 ```js
-// mount.webpack.js
+// src/mount.webpack.js
 const { Router } = require('express');
 
 module.exports = app => {
@@ -184,7 +191,7 @@ module.exports = app => {
 	// Initial load:
 	getRouter();
 
-	// Hot reload the conext
+	// Hot reload the context
 	if (module.hot) {
 		module.hot.accept(contextRequire.id, getRouter);
 	}
@@ -233,13 +240,13 @@ if (isDev) {
 		const compiler = webpack(webpackConfig);
 		compiler.watch({ filename: paths.appSrc }, function(err, stats) {
 			if (err) {
-				throw err;
+				console.error(err);
 			}
 			resolve();
 		});
 	}).then(() => {
 		// Mount the routes when ready (and only once via promise semantics):
-		require('./.build/server')(app);
+		require('./.build/server').mount(app);
 	});
 
 	// waitForBuild middleware to avoid confusing 404s
@@ -248,7 +255,7 @@ if (isDev) {
 	});
 } else {
 	// In production mode, load it as before:
-	require('./.build/server')(app);
+	require('./.build/server').mount(app);
 }
 
 app.listen(3000);
@@ -269,6 +276,7 @@ require('source-map-support').install({
 ```
 
 # Conclusion
+
 We had to jump through a few hoops, but the server is happily compiling as
 needed and hot reloading during development.
 
