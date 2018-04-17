@@ -35,7 +35,8 @@ Unlike react, angular does not abstract and handle DOM events as synthetic event
 ones are covered by directives such as `ngFocus`, but binding via DOM methods will cause the callback
 to happen outside of angular land.
 
-Take care not to create side-effect loops from the `$digest` cycle.
+Take care not to create side-effect loops from the `$digest` cycle. If we get an `infiniteDigest`, this
+means we've created a loop in our `$watch` logic.
 
 <!-- This feature can be emulated in React by implementing `componentShouldUpdate` functions (maybe?). -->
 
@@ -48,16 +49,22 @@ In angular, things get a bit more fuzzy. `ngHTML` works as a superset of HTML, w
 added in. This means when we're writing our templates, we can use things like `ng-if` to create a
 subtree that will only render if a condition is true. But how does this actually work?
 
-Whenever we encounter an `ng-` attribute, or custom element tag, it's probably a directive. Directives
-are much more than "expanding" elements though.
+Whenever we encounter an [`ng-` attribute](https://docs.angularjs.org/api/ng/directive), or custom element tag,
+it's probably a directive. Directives can be much more than "expanding" tags into templates though.
 
 ###  Directive types: Elements, attributes and classes
 Angular supports more kinds of directives than the `element` type known from react. This is expressed
 in directives as `restrict: 'EAC'`.
 
-- Elements, or `E` will make the directive work as `<MyDirective></MyDirective>`, and is
-- Attributes, or `A` will make the directive work as `<div my-directive></div>`.
-- Classes, or `C` will make the directive work as `<div class="my-directive"></div>`.
+- Elements, or `E` will make the directive work as `<MyDirective></MyDirective>`.
+- Attributes, or `A` will make the directive work on `<div my-directive></div>`.
+- Classes, or `C` will make the directive work on `<div class="my-directive"></div>`.
+
+Angular has defined `element` directives for `input`, just like react has custom semantics for `value`
+on input elements. `ng-model` would be a matching attribute directive commonly used to do value binding.
+
+Class directives can be combined with the two others, to create an element with a whole list of directives
+applied to it. Watch out to keep things simple, since each can create scopes, bindings and mutations.
 
 ### Directive scopes: Passing around values
 Where in react we're passing down props, in angular everything is handled via `$scope`.
@@ -66,35 +73,85 @@ Scopes defined with the binding keys is how we pass values to our directives.
 
 Some directives create new scopes, which might create hard to debug situations.
 This comes up with [`ngIf`](https://docs.angularjs.org/api/ng/directive/ngIf) for instance, which
-creates a new scope for
+creates a new scope for the conditional part of the template. Depending on the directives we use,
+the same template might create several scopes.
 
+```html
+<article>
+  <h1>I am controller scope</h1>
+  <div ng-if="shouldShowWarning">
+    <h2>Watch out! I am a new scope!</h2>
+  </div>
+  <div ng-if="shouldShowWarning">
+    <h2>Watch out! I am another new scope!</h2>
+  </div>
+</article>
+```
+
+We can check the documentation if the directive is an official one. If we're not
+that lucky, we can read the code and look for the `scope` property.
 
 ```js
-angular.module('docsTabsExample', [])
-.directive('myTabs', function() {
+angular.module('myInputModule', [])
+.directive('myInput', function() {
   return {
-    restrict: 'E',
-    scope: {},
+    // ...
+    scope: {}
+    // ...
   };
 });
 ```
 
+[Directive scope](https://spin.atomicobject.com/2015/10/14/angular-directive-scope/) is a complex thing.
+Understanding it will make tracing values and debugging much easier.
 
+If the value is not there, or is falsy, the directive will execute in the parent scope. This should
+only be used if the directive doesn't modify scope in any way, since it will modify the parents data.
+A truthy value will create a fresh scope that inherits from the parent.
+
+Isolated scope is what we want, when coming from react though. This creates a scope that does not inherit
+any values, and we can rely on only the attributes that are passed down via scope bindings:
+
+```js
+scope: {
+  value: '=' // two-way binding to the value property on the element
+}
+```
+
+We can do a lot crazier things than that with angular, but building simple components like we know
+from react is easy enough with just this kind of isolated scope bindings and `E` type directives.
 
 ### Triggering actions on change
 In react land, we have `componentWillReceiveProps`, `componentWillUpdate` etc.
 `$scope.$watch` serves this purpose.
 
-
 One thing to be aware of when writing mutating code is the depth of the `$watch`. We can tell angular
 to `$watch` deep on the list of objects that we're rendering, and while that will work for most cases,
 it's also extremely slow.
 
+Consider a (contrived) list of users, where we want to react when the list is empty:
+```js
+$scope.$watch('users', () => {
+  if (!$scope.users.length) {
+    alert('No users found, sorry');
+  }
+});
+```
+The values will be shallow compared, unless the `deep` flag is added. This is equivalent to a `PureComponent` in
+react.
+
+
+## Scopes and data storage
 In the same way that we try to move logic and state up the tree in react, we should try to move state
-and logic into services as much as possible.
+and logic into services as much as possible. Putting data on the `$scope` or `this` of a controller
+can be considered equivalent to putting the values in a component via `setState`. As such, only values
+that should be considered implementation details should live here.
 
+Another nice take-away that can be implemented when building angular apps is the immutable values in
+the datastore. For angular this could be done by returning clones to the controllers, so that mutations
+are local, or by returning frozen objects to enforce purity.
 
-## Scope inheritance gotcha w/ two-way bindings
+### Prototypical inheritance gotchas
 When writing a controller that binds to `$scope.username` or similar, and wondered why
 the value would not properly propagate back to the parent, this is for you.
 
