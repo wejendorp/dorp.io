@@ -1,5 +1,5 @@
 ---
-title: "Angular from a React perspective"
+title: "Notes on returning to Angular 1"
 category: programming
 tags: [angular]
 ---
