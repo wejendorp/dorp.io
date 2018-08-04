@@ -119,6 +119,7 @@ contents of `node_modules` doesn't match `package.json`.
 
 ```json
 {
+  "name": "my-package",
   "scripts": {
     "prestart": "check-dependencies",
     "start": "node ./index.js"
