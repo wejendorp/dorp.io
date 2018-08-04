@@ -79,7 +79,7 @@ We can add an `.nvmrc` file to the root of the repo to tell developers which ver
 to use. Whenever we see such a file, it should contain the recommended node version,
 and running `nvm use` will make sure we're running the way the author intended.
 
-```
+```bash
 $ echo "8" > .nvmrc
 $ nvm use
 Found '[...]/.nvmrc' with version <8>
@@ -134,7 +134,7 @@ There's a slight caveat though. If we start using linked packages to fix an issu
 subdependency, the version in `package.json` still has to match, or our package will
 do as we asked, and refuse to start.
 
-```
+```bash
 $ npm start
 
 > Apps@2017.0.0 prestart /Users/jacob/dev/Tradeshift/Apps
