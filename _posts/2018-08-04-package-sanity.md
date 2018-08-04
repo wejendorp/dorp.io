@@ -1,5 +1,7 @@
 ---
 title: Package sanity checks
+category: programming
+tags: [node]
 ---
 
 There are already plenty of ways developing packages for node can be confusing,
@@ -14,6 +16,7 @@ and frustration.
 
 These issues can be solved once and for all with some `npm` magic.
 
+
 # Run the right node
 WIP:
 
@@ -21,7 +24,6 @@ WIP:
 * nvm
 * npm i node
 * react-scripts example
-
 
 # Avoid stale modules: `check-versions`
 
