@@ -14,6 +14,7 @@ it has, the more cracks will appear when you need to move or change an interface
 When a feature needs adding, and falls into the void, who knows where it ends up? Sometimes `math.random()` might
 as well decide, since "anywhere" will seem perfect when deadlines loom.
 
+
 Even when you perfectly understand the entire codebase, figuring out which classes to change can be hard.
 Now pass this code on to the next guy, who has none of the context. How many concepts will they
 have to learn in order to work in the framework and vocabulary that you have created without breaking it?
