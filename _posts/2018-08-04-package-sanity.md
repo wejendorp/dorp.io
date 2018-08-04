@@ -11,19 +11,85 @@ maintainer.
 Some common mistakes are easily prevented, and avoiding them will save much time
 and frustration.
 
-* Is this the right version of `node`?
-* Are our packages installed correctly?
+* Is this the correct version of `node`?
+* Are the dependencies installed correctly, with the right versions?
 
-These issues can be solved once and for all with some `npm` magic.
+These issues can be solved once and for all with some `npm` / shell magic.
 
 
 # Run the right node
-WIP:
+Likelely nothing will work if we end up running the wrong version of node.
+Whether that is a too new or too old version, it might cause all kinds of
+unpredictable behavior.
+To make sure we run the right version for a package we have a few options.
 
-* npm engines
-* nvm
-* npm i node
-* react-scripts example
+## npm engines
+The first official tool at our disposal is the [package.json engines](https://docs.npmjs.com/files/package.json#engines) property.
+It advises consumers to use a spefic version of `node` with the `engines` when the package is installed.
+
+```json
+{
+  "name": "my-package",
+  "engines": {
+    "node": "^8.11.0",
+    "npm": "^6"
+  }
+}
+```
+
+This will generate a warning if the package is installed with an unsupported version,
+according to the [semver ranges](https://docs.npmjs.com/misc/semver#ranges).
+Here we are a bit conservative and only want node versions greater than `8.11`
+but less than 9.
+
+This is not quite enough for enforcing a version when working on the package itself,
+but it's our only option for telling consumers about potential compatiblity issues.
+
+## Install node locally
+An option if the repository requires a specific node version for development, or
+if the repo is not a package to be published. We can install an exact version of
+node, which will be installed like an npm package, and added to the path for
+npm run.
+
+```bash
+$ npm install nodejs@8.11.3 --save-exact --save-dev
+```
+
+That way we run a small test with `node -v` and end up with a `package.json` like this:
+
+```json
+{
+  "name": "my-package",
+  "scripts": {
+    "start": "node -v"
+  },
+  "devDependencies": {
+    "node": "8.11.3"
+  }
+}
+```
+
+```bash
+$ npm start
+v8.11.3
+```
+
+## Using [nvm](https://nvm.sh)
+We can add an `.nvmrc` file to the root of the repo to tell developers which version
+to use. Whenever we see such a file, it should contain the recommended node version,
+and running `nvm use` will make sure we're running the way the author intended.
+
+```
+$ echo "8" > .nvmrc
+$ nvm use
+Found '[...]/.nvmrc' with version <8>
+Now using node v8.11.3 (npm v6.1.0)
+```
+
+If we embrace the `.nvmrc` as a standard, we can automate the version switching
+by adding some shell magic, to look for it and run `nvm use` if it exists.
+
+* [nvm shell integration](https://github.com/creationix/nvm/tree/17c33fd9aeb42261d38fea676246700898ea2855#deeper-shell-integration)
 
 # Avoid stale modules: `check-versions`
 
@@ -38,7 +104,7 @@ Avoid wasting hours trying to debug an inconsistent state of the world,
 or from losing a potential contributor by adding `check-dependencies`, and catching
 the problem early.
 
-We can also run `check-dependencies` without an explicit dependency with `npx`.
+We can run `check-dependencies` without an explicit dependency with `npx`.
 To check the state of the world, for any package.
 
 ```
