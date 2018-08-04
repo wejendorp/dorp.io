@@ -56,7 +56,7 @@ it's probably a directive. Directives can be much more than "expanding" tags int
 Angular supports more kinds of directives than the `element` type known from react. This is expressed
 in directives as `restrict: 'EAC'`.
 
-- Elements, or `E` will make the directive work as `<MyDirective></MyDirective>`.
+- Elements, or `E` will make the directive work as `<my-directive></my-directive>`.
 - Attributes, or `A` will make the directive work on `<div my-directive></div>`.
 - Classes, or `C` will make the directive work on `<div class="my-directive"></div>`.
 
