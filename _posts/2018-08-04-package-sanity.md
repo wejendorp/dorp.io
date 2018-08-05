@@ -108,7 +108,7 @@ the problem early.
 We can run `check-dependencies` without an explicit dependency with `npx`.
 To check the state of the world, for any package.
 
-```
+```bash
 $ npx check-dependencies
 @tradeshift/document-components: installed: 4.14.0, expected: 4.15.0
 @tradeshift/v4: installed: 12.8.1, expected: 12.9.0
