@@ -139,6 +139,9 @@ img.gravatar {
 	padding-top: 1em;
 	border-bottom: 1px solid #f0f0f0;
 }
+.list-group-item:first-child {
+  padding-top: 0;
+}
 .list-group-item h4 {
 	margin-top: 0;
 }

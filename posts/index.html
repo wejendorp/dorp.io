@@ -1,6 +1,8 @@
 ---
-title: Thoughts were had
-subtitle: All posts
+title: All posts
+layout: page_noheader
+redirect_from:
+  - /
 ---
 
 {% if paginator.posts %}
@@ -10,7 +12,7 @@ subtitle: All posts
 
     <div class="list-group-item">
       <div class="card-block">
-        <a href="{{ post.url }}"><h3 class="card-title">{{ post.title }}</h3></a>
+        <a href="{{ post.url }}"><h1 class="card-title">{{ post.title }}</h1></a>
         <div class="card-text">{{ post.excerpt }}</div>
         <small><a href="{{ post.url }}">Read more</a></small>
       </div>
