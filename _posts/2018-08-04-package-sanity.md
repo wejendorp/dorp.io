@@ -89,7 +89,7 @@ Now using node v8.11.3 (npm v6.1.0)
 If we embrace the `.nvmrc` as a standard, we can automate the version switching
 by adding some shell magic, to look for it and run `nvm use` if it exists.
 
-* [nvm shell integration](https://github.com/creationix/nvm/tree/17c33fd9aeb42261d38fea676246700898ea2855#deeper-shell-integration)
+[nvm shell integration](https://github.com/creationix/nvm/tree/17c33fd9aeb42261d38fea676246700898ea2855#deeper-shell-integration)
 
 # Avoid stale modules: `check-versions`
 
@@ -101,7 +101,8 @@ incomprehensible. Whoops, the `package.json` has changed, perhaps with some inco
 version of `angular`, but the server unknowingly churns out a broken bundle.
 
 Avoid wasting hours trying to debug an inconsistent state of the world,
-or from losing a potential contributor by adding `check-dependencies`, and catching
+or from losing a potential contributor by adding
+[check-dependencies](https://www.npmjs.com/package/check-dependencies) and catching
 the problem early.
 
 We can run `check-dependencies` without an explicit dependency with `npx`.
