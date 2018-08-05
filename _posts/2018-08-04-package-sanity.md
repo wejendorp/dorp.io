@@ -89,7 +89,7 @@ Now using node v8.11.3 (npm v6.1.0)
 If we embrace the `.nvmrc` as a standard, we can automate the version switching
 by adding some shell magic, to look for it and run `nvm use` if it exists.
 
-[nvm shell integration](https://github.com/creationix/nvm/tree/17c33fd9aeb42261d38fea676246700898ea2855#deeper-shell-integration)
+The official repo has examples of [nvm shell integration](https://github.com/creationix/nvm/tree/17c33fd9aeb42261d38fea676246700898ea2855#deeper-shell-integration)
 
 # Avoid stale modules: `check-versions`
 
@@ -131,14 +131,14 @@ contents of `node_modules` doesn't match `package.json`.
 }
 ```
 
-There's a slight caveat though. If we start using linked packages to fix an issue in a
-subdependency, the version in `package.json` still has to match, or our package will
-do as we asked, and refuse to start.
+There's a slight caveat though. If we start using `npm link`ed packages to fix an issue in a
+subdependency, the version in `package.json` still needs to match, or our package will
+do as we just asked, and refuse to start.
 
 ```bash
 $ npm start
 
-> Apps@2017.0.0 prestart /Users/jacob/dev/Tradeshift/Apps
+> Apps@2017.0.0 prestart [...]/Apps
 > check-dependencies
 
 @tradeshift/v4: installed: 0.0.0-semantically-released, expected: 12.9.0
@@ -147,5 +147,8 @@ npm ERR! code ELIFECYCLE
 npm ERR! errno 1
 ```
 
-Can't win them all... But by either disabling the `prestart` script
-or specifying the verison manually, this can be overcome.
+Finally, the node api of `check-dependencies` can be used to customize the
+behavior, and ignore certain types of mismatches, such as symlinked packages.
+
+But by either disabling the `prestart` script or specifying the version manually
+while testing, we can test without the check getting in the way.
