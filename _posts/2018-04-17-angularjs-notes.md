@@ -16,7 +16,7 @@ possible to write small mutations to objects, and then wait for (or trigger) the
 update the views accordingly.
 
 As long as we're doing updates in synchronous code, angular will automatically pick up our changes.
-If we are using asynchronous code, such as doing XHR or `setTimeout`, you need to tell angular that
+If we are using asynchronous code, such as doing XHR or `setTimeout`, we need to tell angular that
 something has happened.
 
 Angular provides a set of services that do the digest stuff for us such as `$http` and `$q`, but If
@@ -130,6 +130,7 @@ to `$watch` deep on the list of objects that we're rendering, and while that wil
 it's also extremely slow.
 
 Consider a (contrived) list of users, where we want to react when the list is empty:
+
 ```js
 $scope.$watch('users', () => {
   if (!$scope.users.length) {
@@ -137,6 +138,7 @@ $scope.$watch('users', () => {
   }
 });
 ```
+
 The values will be shallow compared, unless the `deep` flag is added. This is equivalent to a `PureComponent` in
 react.
 
@@ -152,12 +154,11 @@ the datastore. For angular this could be done by returning clones to the control
 are local, or by returning frozen objects to enforce purity.
 
 ### Prototypical inheritance gotchas
-When writing a controller that binds to `$scope.username` or similar, and wondered why
-the value would not properly propagate back to the parent, this is for you.
-
-A common use case for this is `ng-model`, which does a two-way binding by default.
-
-Can best be explained by noting that scopes inherit values via [prototypical inheritance](https://github.com/angular/angular.js/wiki/Understanding-Scopes#javascript-prototypal-inheritance).
+When writing a controller or `ng-model` that binds to `$scope.username` or similar, why
+is the value sometimes not properly propagated back to the parent scope?
+This happens because scopes use
+[prototypical inheritance](https://github.com/angular/angular.js/wiki/Understanding-Scopes#javascript-prototypal-inheritance).
+Let's explore what that looks like in an isolated way:
 
 ```js
 // Angular has `$rootScope` instance, which we'll define here:
@@ -195,8 +196,8 @@ console.assert($scope.user.username === $rootScope.user.username, 'expected user
 // It works!
 ```
 
-This is why we want to be passing objects, not primitives around to other scopes and directives whenever
-possible. By doing so, we avoid creating weird disconnects if we're doing mutations.
+So we want to be *passing objects, not primitives* around to other scopes and directives whenever
+possible. By doing so, we avoid creating weird edge cases if we're doing mutations.
 
 Of course, nothing prevents us from writing angular directives and controllers using the unidirectional
 dataflow principles from react, which makes these issues irrelevant.
@@ -220,11 +221,12 @@ module.exports = function fn(a) {};
 Which will trigger a message like `Unknown service 'a'`.
 
 In order to write code that will survice minification, we have two equivalent options:
+
 ```js
-//
+// return an array of dependencies before the function:
 module.exports = ['$scope', function myController($scope) {}];
 
-// Or using $inject if you prefer to set a property to passing around arrays
+// Or using $inject if we prefer to set a property to passing around arrays
 function myController($scope) {};
 myController.$inject = ['$scope'];
 module.exports = myController;
@@ -259,17 +261,21 @@ app.factory('ping', ['$http', function($http) {
 }]);
 ```
 
-A `provider` let's us go up another level, and write a function that'll return the factory. This is
-used to allow configuration of the service before it is created. For instance by setting the `$routeProvider`
-to use html5 `pushState` instead of `hash` routing, changing the bindings it'll do when created.
+A `provider` let's us go up another level, and write a constructor function that'll
+create the factory (that'll return the service).
 
-Here we can make the ping url configurable in the `config` phase, but hidden during the `run` phase
-inside the function scope.
+This is useful when adding configuration of the service before it is created.
+For instance by setting the `$routeProvider` to use html5 `pushState` instead
+of `hash` routing, changing the bindings it'll do when created.
+
+For our example, we can make the ping url configurable in the `config` phase,
+while effectively hiding it during runtime. The `run` phase has no way to see the provider.
 
 ```js
 function pingProvider() {
   let pingUrl = '/track';
 
+  // Configuration functions/properties are instance properties on `this`.
   // A provider method for configuring where the ping events should be sent
   this.setPingUrl = function(url) {
     pingUrl = url;
@@ -298,10 +304,10 @@ app.config(($pingProvider) => {
 ```
 
 So we have three layers of abstraction at our disposal when creating a service. Consider carefully
-what kind of control you need, and choose the least powerful/complex option that covers our usecase.
+what kind of control is needed, and choose the least powerful/complex option that covers the usecase.
 
 ### Config phases
-We can only access a `$provider` type in the `config` step of your application. Everything else is
+We can only access a `$provider` type in the `config` step of our application. Everything else is
 available for injection during the `run` phases. To use the example above, this prevents us from
 accessing `$pingProvider` in a controller.
 
