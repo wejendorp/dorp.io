@@ -1,7 +1,7 @@
 ---
 title: Package sanity checks
 category: programming
-tags: [node]
+tags: [nodejs]
 ---
 
 There are already plenty of ways developing packages for node can be confusing,
@@ -151,4 +151,4 @@ Finally, the node api of `check-dependencies` can be used to customize the
 behavior, and ignore certain types of mismatches, such as symlinked packages.
 
 But by either disabling the `prestart` script or specifying the version manually
-while testing, we can test without the check getting in the way.
+while testing, we can test without the check getting in the wahy.
