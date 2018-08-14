@@ -4,14 +4,14 @@ category: programming
 tags: [nodejs]
 ---
 
-There are already plenty of ways developing packages for node can be confusing,
+There are a lot of ways in which developing packages for node can be confusing,
 especially in an environment where not every contributor is an avid npm package
 maintainer.
 
 Some common mistakes are easily prevented, and avoiding them will save much time
 and frustration.
 
-* Is this the correct version of `node`?
+* Is this the correct version of `node` for this project?
 * Are the dependencies installed correctly, with the right versions?
 
 These issues can be solved once and for all with some `npm` / shell magic.
@@ -21,6 +21,28 @@ These issues can be solved once and for all with some `npm` / shell magic.
 Likelely nothing will work if we end up running the wrong version of node.
 Whether that is a too new or too old version, it might cause all kinds of
 unpredictable behavior.
+
+If the project is using newer node features, running `npm start` might look like
+this:
+
+```bash
+(function (exports, require, module, __filename, __dirname) { async function foo() {
+                                                                    ^^^^^^^^
+
+SyntaxError: Unexpected token function
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:373:25)
+    at Object.Module._extensions..js (module.js:416:10)
+    at Module.load (module.js:343:32)
+    at Function.Module._load (module.js:300:12)
+    at Function.Module.runMain (module.js:441:10)
+    at startup (node.js:140:18)
+    at node.js:1043:3
+
+```
+
+Instead of leaving people to guess what went wrong, we can try and detect this,
+giving a much friendlier error.
 To make sure we run the right version for a package we have a few options.
 
 ## npm engines
@@ -41,6 +63,10 @@ This will generate a warning if the package is installed with an unsupported ver
 according to the [semver ranges](https://docs.npmjs.com/misc/semver#ranges).
 Here we are a bit conservative and only want node versions greater than `8.11`
 but less than 9.
+
+```
+npm WARN engine my-package@1.0.0: wanted: {"node":"^8.11.0"} (current: {"node":"8.9.4","npm":"5.6.0"})
+```
 
 This is not quite enough for enforcing a version when working on the package itself,
 but it's our only option for telling consumers about potential compatiblity issues.
@@ -73,6 +99,9 @@ That way we run a small test with `node -v` and end up with a `package.json` lik
 $ npm start
 v8.11.3
 ```
+
+Basically any run-script we add will use the `node` binary from `./node_modules/.bin`
+instead of the one from the system.
 
 ## Using [nvm](https://nvm.sh)
 We can add an `.nvmrc` file to the root of the repo to tell developers which version
