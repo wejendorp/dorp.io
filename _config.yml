@@ -63,7 +63,7 @@ defaults:
 # Custom
 repository: wejendorp/dorp.io
 # domain: dorp.io
-url: https://dorp.io/
+url: https://dorp.io
 baseurl: ""
 title: dorp.io
 description: Personal website of Jacob Wejendorp
