@@ -21,7 +21,7 @@
   {% capture tags_content %}{{ tags | join: ", " }}{% endcapture %}
 {% endif %}
 
-<p class="m-t-3 text-muted font-italic">
+  <p class="m-t-3 text-muted font-italic">
   <small>Posted
     <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%b. %d, %Y' }}</time>
 		{% if category_content %} in
@@ -30,7 +30,7 @@
 			<small>
 		{% endif %}
 		{{ tags_content }}
-
-		<a class="comment-count pull-right" href="{{ post.url }}#disqus_thread">0 Comments</a>
+    -
+		<a class="comment-count" href="{{ post.url }}#disqus_thread">0 Comments</a>
 	</small>
 </p>

@@ -156,7 +156,7 @@ img.gravatar {
 .container {
   width: 50rem;
   margin: 0 auto;
-  padding: 0 3rem;
+  padding: 0 4vw;
 }
 .container.content {
 	padding-bottom: 40px;
@@ -169,7 +169,6 @@ img {
 @media(max-width: 792px) {
   .container {
     width: auto;
-    padding: 0 16px;
   }
   img.gravatar {
     display: block;
@@ -196,13 +195,17 @@ h1 + p.meta {
   line-height: 48px;
   margin-bottom: 2rem;
 }
+.navbar .container {
+  display: flex;
+  flex-direction: row;
+}
 .navbar * {
   margin-bottom: 0;
 }
 .navbar .title {
   font-family: 'Open Sans', sans-serif;
-  float: left;
-  width: 140px;
+  flex-basis: 120px;
+  flex-shrink: 2;
   text-align: center;
   color: #a00;
   font-size: 22px;
@@ -214,8 +217,9 @@ h1 + p.meta {
 }
 
 .navbar ul {
+  flex-basis: content;
+  flex-shrink: 0;
   list-style-type: none;
-  float: left;
 }
 .navbar ul li {
   display: inline-block;
@@ -241,8 +245,8 @@ h1 + p.meta {
   border: solid #ddd;
   border-width: 0 1px;
   background-color: #333;
-  padding: 1rem 3rem;
-  margin: 1rem -3rem;
+  padding: 1.5rem 4vw;
+  margin: 1.5rem -4vw;
   overflow-x: auto;
   tab-size: 2;
 }
