@@ -63,9 +63,9 @@ defaults:
 # Custom
 repository: wejendorp/dorp.io
 domain: dorp.io
-url: http://dorp.io
+url: https://dorp.io
 title: dorp.io
-description: Portfolio website of Stephan Groß
+description: Personal website of Jacob Wejendorp
 name: dorp
 author: wejendorp
 twitter:
