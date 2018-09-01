@@ -91,6 +91,10 @@ Our separated `webpack.config.js` rule:
 }];
 ```
 
+> **Note:** We might want to weak the `mainFields` property in webpack, depending
+> on our `target`. The defaults should work, but if it's not picking up the esm
+> version as expected, check [resolve.mainFields][webpack-mainfields].
+
 # Don't transpile module types. Watch those babel plugins!
 
 As [the docs][wp-treeshaking] say, tree shaking relies on static `imports` and `exports`.
@@ -235,6 +239,7 @@ nifty [codemod][jscodeshift], and another day.
 
 [wp-treeshaking]: https://webpack.js.org/guides/tree-shaking/ 'Webpack tree shaking'
 [webpack-esm-issue]: https://github.com/webpack/webpack/issues/4039#issuecomment-273804003
+[webpack-mainfields]: https://webpack.js.org/configuration/resolve/#resolve-mainfields
 [inspect-loader]: https://github.com/peerigon/inspect-loader
 [babel]: https://babeljs.io/ 'BabelJS'
 [babel-preset-env]: https://www.npmjs.com/package/@babel/preset-env '@babel/preset-env on npm'
