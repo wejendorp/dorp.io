@@ -219,9 +219,9 @@ We're not done yet though, since `esm` mode will create some new edge cases for 
 If you encounter something like this:
 
 > \> Uncaught TypeError: Cannot assign to read only property 'exports' of object '#<Object\>'
->
-> it's because `webpack` is determining the module format to be `esm`, but the module is trying to
-> use commonjs exports.
+
+it's because `webpack` is determining the module format to be `esm`, but the module is trying to
+use commonjs exports.
 
 **If a file contains the `import` keyword** when they reach webpack,
 it will assume it's an esm module, and run in `javascript/esm` mode, where `module.exports` is
