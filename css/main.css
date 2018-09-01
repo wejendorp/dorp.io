@@ -44,6 +44,20 @@ a.disabled { pointer-events: none; }
 ul, ol {
   margin-left: 1.35em;
 }
+blockquote {
+  background: #f9f9f9;
+  padding: 0.8rem 2vw;
+  margin: 0.8rem -2vw;
+  border-left: 6px solid #eee;
+  position: relative;
+  left: -3px;
+}
+blockquote p:first-child {
+  margin-top: 0;
+}
+blockquote p:last-child {
+  margin-bottom: 0;
+}
 
 ul.vsp li {
 	margin-bottom: 1em;
