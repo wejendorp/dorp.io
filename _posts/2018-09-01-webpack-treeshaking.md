@@ -125,27 +125,29 @@ We can get an idea by adding [inspect-loader][inspect-loader] above (meaning aft
 our config:
 
 ```js
-[{
-  test: /\.js$/,
-  use: [
-    // Config for our app code
-    {
-      loader: 'inspect-loader',
-      options: {
-        callback({ arguments : [sourceCode, { sources }]}) {
-          console.log('// ', sources.join(', '), 'generated:');
-          console.log(sourceCode);
-        }
-      }
-    },
-    {
-      loader: 'babel-loader',
-      options: {
-        // ...
-      }
-    }
-  ]
-}]
+[
+	{
+		test: /\.js$/,
+		use: [
+			// Config for our app code
+			{
+				loader: 'inspect-loader',
+				options: {
+					callback({ arguments: [sourceCode, { sources }] }) {
+						console.log('// ', sources.join(', '), 'generated:');
+						console.log(sourceCode);
+					}
+				}
+			},
+			{
+				loader: 'babel-loader',
+				options: {
+					// ...
+				}
+			}
+		]
+	}
+];
 ```
 
 And then run our build:
@@ -203,10 +205,10 @@ map([1, 2, 3], function(x) {
 
 which looks more promising.
 
-> Warning: whereas it's that simple, if this is our only preset, we need to check
-> that none of the presets we might add, will try to do the module transpilation.
+> **Warning:** we need to check
+> that none of the presets we add will try to do the module transpilation.
 > For instance, as stated on the [preset-env][babel-preset-env-how] docs, the
-> `babel-preset-stage-X` presets are incompatible with `preset-env`. Among the
+> `babel-preset-stage-X` presets are **incompatible with `preset-env`**. Among the
 > incompatible features are `esm` to `commonjs` modules transform. So removing it
 > and similar plugins is essential to getting this to work.
 
@@ -230,7 +232,6 @@ This is potentially the biggest blocker to migrating our current codebase, since
 using named exports everywhere (i.e. breaking `require('./foo')` by exporting
 `.default`) will require major refactoring. Although that might be a task for a
 nifty [codemod][jscodeshift], and another day.
-
 
 [wp-treeshaking]: https://webpack.js.org/guides/tree-shaking/ 'Webpack tree shaking'
 [webpack-esm-issue]: https://github.com/webpack/webpack/issues/4039#issuecomment-273804003
