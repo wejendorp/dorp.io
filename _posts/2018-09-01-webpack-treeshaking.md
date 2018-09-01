@@ -170,15 +170,15 @@ var _lodash = require('lodash');
 Which is no good, it's not the format webpack needs to do it's magic. Which magic flag
 should we flip to get this to work?
 
-## [@babel/preset-env][babel-preset-env]
+## Presets and configs; @babel/preset-env
 
-Probably the most pervasive preset in modern web development, which allows us to
-specify the browsers we want to support, rather than which features we want to
-transpile. This offloads the task of figuring out which browsers support which
-ES features.
+[@babel/preset-env][babel-preset-env] is probably the most pervasive preset in modern web development, which allows us to specify the browsers we want to support, rather
+than which features we want to transpile. This offloads the task of figuring out
+which flags to flip to support a given browser. Assuming we keep the packages up
+to date.
 
-If we set the modules option to `false` in our `.babelrc` or inline in the webpack
-config, we can prevent preset-env from handling modules for us:
+If we set the modules option of preset-env to `false` in our `.babelrc`, or inline
+in the webpack config, we can prevent the preset from handling modules for us:
 
 ```json
 {
@@ -193,7 +193,7 @@ config, we can prevent preset-env from handling modules for us:
 }
 ```
 
-`inspect-loader` will now print:
+If we try again by running `webpack`, our `inspect-loader` will now print:
 
 ```js
 //  src/index.js generated:
