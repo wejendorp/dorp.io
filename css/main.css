@@ -263,6 +263,7 @@ h1 + p.meta {
   margin: 1.5rem -4vw;
   overflow-x: auto;
   tab-size: 2;
+  -moz-tab-size: 2;
 }
 
 .pagination {
