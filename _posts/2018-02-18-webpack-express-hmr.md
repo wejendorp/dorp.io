@@ -60,10 +60,6 @@ module.exports = {
 				test: /\.js?$/,
 				use: 'babel-loader',
 				exclude: /node_modules/
-			},
-			{
-				test: /\.json$/,
-				use: 'json-loader'
 			}
 		]
 	},
@@ -169,6 +165,7 @@ new Router instance into express:
 ```js
 // src/mount.webpack.js
 const { Router } = require('express');
+const path = require('path');
 
 module.exports = app => {
 	let expressRouter;
@@ -176,8 +173,9 @@ module.exports = app => {
 	let contextRequire;
 
 	const getRouter = () => {
-		contextRequire = require.context('src/routes', true, /\.express\.js$/);
+		contextRequire = require.context('./routes/', true, /\.express\.js$/);
 		const files = contextRequire.keys();
+		// Make sure to swap out the router:
 		const newRouter = Router();
 
 		files.forEach(file => {
@@ -186,12 +184,14 @@ module.exports = app => {
 			// Handle ES6 default exports:
 			const entrypointRouter = entrypoint.default || entrypoint;
 			const mountAt = path.basename(path.dirname(file));
-			app.use(`/${mountAt}`, entrypointRouter);
+			newRouter.use(`/${mountAt}`, entrypointRouter);
 		});
+		// Switcheroo
+		expressRouter = newRouter;
 	};
+
 	// Initial load:
 	getRouter();
-
 	// Hot reload the context
 	if (module.hot) {
 		module.hot.accept(contextRequire.id, getRouter);
@@ -202,6 +202,25 @@ module.exports = app => {
 		expressRouter(req, res, next);
 	});
 };
+
+```
+
+```js
+// src/routes/auth/login.express.js
+const router = require('express').Router();
+
+router.post('/', function login(req, res, next) {
+	// Super secure example login:
+	if (req.body.username === 'admin' && req.body.password === 'letmein') {
+		// req.session.authenticated = true;
+		res.json({ status: 'success'});
+	} else {
+		res.status(401);
+		res.json({ status: 'invalid login'});
+	}
+});
+
+module.exports = router;
 ```
 
 Now, if we try and make any changes to a matching router, we should see
@@ -227,9 +246,9 @@ That means adding an automatic wait for build, and compiling during startup.
 ```js
 // index.js
 // "webpack-dev-server" minimal example
-
 const express = require('express');
 const app = express();
+app.use(require('body-parser').json());
 
 const isDev = process.env.NODE_ENV !== 'production';
 
@@ -239,7 +258,7 @@ if (isDev) {
 
 	const buildPromise = new Promise(resolve => {
 		const compiler = webpack(webpackConfig);
-		compiler.watch({ filename: paths.appSrc }, function(err, stats) {
+		compiler.watch({ filename: '.' }, function(err, stats) {
 			if (err) {
 				console.error(err);
 			}
@@ -288,3 +307,6 @@ $ webpack --config webpack/webpack.config.server.js
 ```
 
 Have fun iterating even faster on your express modules!
+
+
+For a full working example, check out the [proof of concept git repo](https://github.com/wejendorp/webpack-express-hmr).
