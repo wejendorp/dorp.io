@@ -12,7 +12,12 @@ redirect_from:
 
     <div class="list-group-item">
       <div class="card-block">
-        <a href="{{ post.url }}"><h1 class="card-title">{{ post.title }}</h1></a>
+        <header class="title">
+          <a href="{{ post.url }}"><h1 class="card-title">{{ post.title }}</h1></a>
+          <p class="text-muted user-select-none">
+            <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%b. %d, %Y' }}</time>
+          </p>
+        </header>
         <div class="card-text">{{ post.excerpt }}</div>
         <small><a href="{{ post.url }}">Read more</a></small>
       </div>

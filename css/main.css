@@ -254,13 +254,17 @@ h1 + p.meta {
 .post {
   margin-bottom: 48px;
 }
-
-.highlight {
+div.highlighter-rouge {
+  border-top: 0.8rem solid #333;
+  border-bottom: 0.8rem solid #333;
+  margin: 1.5rem -4vw;
+}
+/* overqualified because gh acts weird */
+pre.highlight {
   border: solid #ddd;
   border-width: 0 1px;
-  background-color: #333;
-  padding: 1.5rem 4vw;
-  margin: 1.5rem -4vw;
+  background-color: #404040;
+  padding: 1.2rem 4vw;
   overflow-x: auto;
   tab-size: 2;
   -moz-tab-size: 2;
