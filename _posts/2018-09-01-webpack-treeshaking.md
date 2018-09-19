@@ -23,6 +23,7 @@ shaking from working.
   since it messes with module type detection.
 - Don't mix esm `import` and commonjs `module.exports`, they are incompatible.
 
+<!-- cut -->
 
 # Transpile everything!
 

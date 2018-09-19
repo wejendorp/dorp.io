@@ -16,6 +16,7 @@ and frustration.
 
 These issues can be solved once and for all with some `npm` / shell magic.
 
+<!-- cut -->
 
 # Run the right node
 Likelely nothing will work if we end up running the wrong version of node.

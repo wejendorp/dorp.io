@@ -18,7 +18,7 @@ what that means, I hope the Railway analogy will help you as it did me.
 Most functions that are doing external calls like HTTP requests, file system operations or runtime
 validation will have at least two different outputs: a success case and an error case.
 
-
+<!-- cut -->
 
 ```js
 function generateProfit() {

@@ -15,7 +15,7 @@ for interesting tasks. Grunt-template is a simple task designed to pass any data
 [underscore template](http://underscorejs.org/#template) file, and write the result to another file.
 That's perfect! Now let's write some templates and configure grunt-template.</section>
 
-
+<!-- cut -->
 
 ## Angular modules
 What if we could just define angular modules as `{myModule: {myValue: 'Some value'}}`?

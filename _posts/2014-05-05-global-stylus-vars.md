@@ -24,7 +24,7 @@ your the trouble of writing
 In all your files.
 Dont worry, `grunt-stylus` has you covered.
 
-
+<!-- cut -->
 
 ## Path madness
 Your stylus `@import` statements should be path independent.

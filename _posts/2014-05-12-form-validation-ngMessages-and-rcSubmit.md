@@ -34,7 +34,7 @@ feels too repetitive.
 If we make a few assumptions on form structure this can easily be avoided with
 a few directives.
 
-
+<!-- cut -->
 
 ## Too much template logic, too repetitive
 With even simple validations, there is much too much logic written in markup.

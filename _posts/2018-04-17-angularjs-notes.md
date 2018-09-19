@@ -9,6 +9,7 @@ Angular 1.x. For reference, we'll use `react` components and lifecycles.
 
 This might seem backwards, but has come up when returning to a large legacy codebase.
 
+<!-- cut -->
 
 ## Digest cycles and blessed `$services`
 Angular, unlike React, uses a digest loop to figure out when things have changed. This means it's

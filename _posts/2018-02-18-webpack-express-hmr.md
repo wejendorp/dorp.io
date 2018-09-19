@@ -18,9 +18,10 @@ We'll focus on getting a single module, and all it's subdependencies to reload
 during development. Specifically, how to dynamically discover [express.Router](http://expressjs.com/en/api.html#express.router) modules and mount them with
 reloading on an existing "normal" express server.
 
-
 If you're looking for a way to run your entire server through webpack, take a look at
 [Hot reload all the things!](https://hackernoon.com/hot-reload-all-the-things-ec0fed8ab0)
+
+<!-- cut -->
 
 # Webpack config
 

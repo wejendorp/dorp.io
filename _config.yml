@@ -2,7 +2,7 @@ encoding: utf-8
 markdown: kramdown
 highlighter: rouge
 
-excerpt_separator: "\n\n\n"
+excerpt_separator: "<!-- cut -->"
 # Outputting
 permalink: /posts/:title/
 paginate: 5
@@ -29,34 +29,29 @@ collections:
     permalink: /posts/tag/:name/
 
 defaults:
-  -
-    scope:
-      path: ""
+  - scope:
+      path: ''
       type: pages
     values:
       layout: page
-  -
-    scope:
-      path: ""
+  - scope:
+      path: ''
       type: posts
     values:
       layout: post
       comments: true
-  -
-    scope:
-      path: ""
+  - scope:
+      path: ''
       type: my_categories
     values:
       layout: blog_by_category
-  -
-    scope:
-      path: ""
+  - scope:
+      path: ''
       type: my_tags
     values:
       layout: blog_by_tag
-  -
-    scope:
-      path: "project"
+  - scope:
+      path: 'project'
     values:
       layout: project
 
@@ -64,7 +59,7 @@ defaults:
 repository: wejendorp/dorp.io
 # domain: dorp.io
 url: https://dorp.io
-baseurl: ""
+baseurl: ''
 title: dorp.io
 description: Personal website of Jacob Wejendorp
 name: dorp

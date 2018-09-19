@@ -18,6 +18,7 @@ src folder. But I think we can do better than that!
 The restart can be expensive, depending on the kinds of initialization that's
 involved. What if we just make node reevaluate only the parts that changed?
 
+<!-- cut -->
 
 # Forget that module
 
