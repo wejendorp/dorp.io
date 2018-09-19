@@ -4,6 +4,10 @@ category: programming
 tags: [webpack]
 ---
 
+**Update**: Don't do this unless you really need to run code transforms on your
+server side code. Use [Node module reloading]({% post_url 2018-09-19-node-module-reloading %}),
+to swap without the overhead from webpack.
+
 Finally got around to setting up a working express hot module reloading config.
 
 When, a year ago, I started replacing a custom `Module` implementation in our
