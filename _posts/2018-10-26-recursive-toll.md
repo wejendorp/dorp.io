@@ -137,6 +137,7 @@ A simple loop is a lot more efficient than any of the recursive forms.
 We can even see it visually, how they affect the call stack, by using devtools to run a performance profile:
 
 ![call stack results](/assets/images/callstack-recursion-perf.png)
+
 ![call stack results](/assets/images/callstack-boringsum-perf.png)
 
 By this very small sample size, we can expect a 10x (chrome) to 100x (safari) speedup,
