@@ -1,6 +1,6 @@
 ---
-title: "The recursive toll"
-subtitle: "How recursion can kill performance"
+title: 'The recursive toll'
+subtitle: 'How recursion can kill performance'
 category: programming
 ---
 
@@ -13,6 +13,12 @@ If we express that in a more functional notation, it's akin to `fn(x :: xs) = x 
 This post serves to warn about the limitations of this type of function, and to
 suggest an alternative for when the situation requires us to exceed those limitations.
 
+This topic came up as part of optimizing tree traversal methods, but for simplicity
+we will use `sum` for the examples. The learnings should apply equally to any
+type of recursive problem, although the runtime constants/impact will vary.
+
+<!-- cut -->
+
 # Recursive functions and the call stack
 
 Say we want to express the sum of a list of numbers, we can express it as the
@@ -21,7 +27,7 @@ We also need to handle the empty list, to create our base case and avoid infinit
 recursion. Expressed as a ternary (inline if statement), this becomes:
 
 ```js
-const sum = list => list.length ? list[0] + sum(list.slice(1)) : 0;
+const sum = list => (list.length ? list[0] + sum(list.slice(1)) : 0);
 ```
 
 If we try it out with a small list of numbers, everything looks fine.
@@ -53,6 +59,7 @@ an infinite recursion.
 So how can we handle bigger inputs without blowing the stack?
 
 # Beating the stack limit with a loop
+
 What if we just used a loop? I know, I know, we will lose all those cool points,
 and our street cred might never fully recover. But sometimes it's better to be
 correct than cool. Stay with me.
@@ -61,34 +68,46 @@ The `sum` function can be written with a loop.
 
 ```js
 const boringSum = list => {
-  let acc = 0;
-  for(let i = 0; i < list.length; i++) {
-    acc += list[i];
-  }
-  return acc;
+	let acc = 0;
+	for (let i = 0; i < list.length; i++) {
+		acc += list[i];
+	}
+	return acc;
 };
 ```
+
+`boringSum` can handle our million dollars in singles just fine. It's a better
+solution to the problem, even if it's not as elegant.
 
 It also comes with a significant performance boost, since we are not creating all
 those stack frames, and can sometimes make the difference between a solution
 that is too slow, and one that is fast enough™.
 
 # Tail call optimization
-This is basically what the compiler will do in languages that have proper tail
-call optimization. But only if the code is written in a form that allows it.
-The rule of thumb is that if the expression cannot be evaluated before recursing,
-the compiler cannot help you.
 
-This is commonly done by introducing an accumulator. Basically we keep a running sum,
-such that instead of creating a call stack with `sum([1, 2, 3, 4])` of
-`1 + (2 + (3 + (4)))`, we can evaluate the plus immediately.
+Rewriting recursion into a loop is basically what the compiler will do in
+languages that have proper tail call optimization. But only if the code is written
+in a form that allows it.
 
-This allows the runtime to swap this stack frame with the new function call.
-There is no longer a need to remember every previous frame in order to get the
-final result.
+The rule of thumb is that if the expressions in the current scope cannot be
+evaluated before recursing, the compiler cannot help you.
+
+Consider it equivalent to either evaluating `1 + (2 + (3 + (4)))` or `1 + 2 + 3 + 4`.
+For `1 + (2 + (3 + (4)))`, we first encounter `1 + (...)`, and we make a note of that.
+To continue we evaluate `2 + (...)`, but need first evaluate the second part, etc.
+On the other hand, `1 + 2 + 3 + 4` can be collapsed immediately when we see `1 + 2`,
+to `3 + 3 + 4`, without making any notes and partial results.
+
+In practice, this is commonly done by introducing an accumulator. Basically we keep a running sum,
+such that instead of creating a call stack with `sum([1, 2, 3, 4])` of `1 + (2 + (...))`
+we can evaluate the plus immediately, and pass it on to a new function call.
+
+This allows the runtime to swap the current stack frame with the new function call, i.e.
+'not to take notes'. There is no longer a need to remember every previous frame
+in order to get the final result.
 
 ```js
-const tailcallSum = (list, acc) => list.length ? sum(list.slice(1), list[0] + acc) : acc;
+const tailcallSum = (list, acc) => (list.length ? sum(list.slice(1), list[0] + acc) : acc);
 ```
 
 **But...** NodeJS had tail call optimization for a while
@@ -97,20 +116,35 @@ underlying V8 engine, it is no longer available.
 
 As long as we write Javascript, we have to consider the limits
 to our recursive functions. Perhaps some day it will return.
-
-When that day comes, because our code will live long enough to become
-it'd be awesome for our functions to be ready, and get a free
-performance boost!
+When that day comes, (because our code will of course live long enough to become legendary!),
+wouldn't it be awesome for our functions to come prepared, and get a free performance boost!
 
 # Conclusion and benchmarks
+
 This is a classic case of don't do this at home. Or don't base your decisions on
 micro benchmarks, since a real world use case will involve all kinds of
 compiler magic, that might interfere with the characteristics of a small snippet
 of code, in order to better optimize on a higher level, or because the optimizing
 compiler has deoptimized your code due to exceptions.
 
-With those disclaimers out of the way, let's look at the numbers:
+With those disclaimers out of the way, let's look at the numbers from running
+some [Recursion microbenchmarks](https://jsperf.com/recursion-stack)
 
-...
+![call stack results](/assets/images/callstack-benchmark.png)
+
+Even though it will vary per browser, the conclusion is pretty clear.
+A simple loop is a lot more efficient than any of the recursive forms.
+
+We can even see it visually, how they affect the call stack, by using devtools to run a performance profile:
+
+![call stack results](/assets/images/callstack-recursion-perf.png)
+![call stack results](/assets/images/callstack-boringsum-perf.png)
+
+By this very small sample size, we can expect a 10x (chrome) to 100x (safari) speedup,
+with inputs causing 2k recursion depths.
+
+Definitely think twice about using recursion if you are writing performance critical code,
+refactoring a hot code path, or trying to optimize the startup of your apps.
+
 
 [stackoverflow-tco]: https://stackoverflow.com/questions/23260390/node-js-tail-call-optimization-possible-or-not#30369729
