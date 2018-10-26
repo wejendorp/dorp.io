@@ -100,7 +100,7 @@ to `3 + 3 + 4`, without making any notes and partial results.
 
 In practice, this is commonly done by introducing an accumulator. Basically we keep a running sum,
 such that instead of creating a call stack with `sum([1, 2, 3, 4])` of `1 + (2 + (...))`
-we can evaluate the plus immediately, and pass it on to a new function call.
+we can evaluate the plus immediately, and pass it on to a new function call as the accumulator argument.
 
 This allows the runtime to swap the current stack frame with the new function call, i.e.
 'not to take notes'. There is no longer a need to remember every previous frame
@@ -114,12 +114,11 @@ const tailcallSum = (list, acc) => (list.length ? sum(list.slice(1), list[0] + a
 [(`v6.2` to `v7.10`)][stackoverflow-tco], but due to limitations in the
 underlying V8 engine, it is no longer available.
 
-As long as we write Javascript, we have to consider the limits
-to our recursive functions. Perhaps some day it will return.
-When that day comes, (because our code will of course live long enough to become legendary!),
-wouldn't it be awesome for our functions to come prepared, and get a free performance boost!
+The support in your favorite browser might [already be here](<https://kangax.github.io/compat-table/es6/#test-proper_tail_calls_(tail_call_optimisation)>),
+but support is very sparse. Consider it future proofing, or a way of opting into
+a future performance boost. Who can say no to that?
 
-# Conclusion and benchmarks
+# Benchmarks
 
 This is a classic case of don't do this at home. Or don't base your decisions on
 micro benchmarks, since a real world use case will involve all kinds of
@@ -143,8 +142,15 @@ We can even see it visually, how they affect the call stack, by using devtools t
 By this very small sample size, we can expect a 10x (chrome) to 100x (safari) speedup,
 with inputs causing 2k recursion depths.
 
-Definitely think twice about using recursion if you are writing performance critical code,
-refactoring a hot code path, or trying to optimize the startup of your apps.
+# Conclusion
 
+The support for optimized recursion in Javascript is still quite limited.
+As long as that's the case, we have to approach it with caution, and be ready to
+consider the alternatives.
+
+Definitely think twice about using recursive definitions for bigger problems.
+If you are writing performance critical code, refactoring a hot code path, or
+trying to optimize the startup of your apps, rewriting a recursive function to
+a simple loop might be an easy win!
 
 [stackoverflow-tco]: https://stackoverflow.com/questions/23260390/node-js-tail-call-optimization-possible-or-not#30369729
