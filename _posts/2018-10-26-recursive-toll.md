@@ -16,6 +16,8 @@ suggest an alternative for when the situation requires us to exceed those limita
 This topic came up as part of optimizing tree traversal methods, but for simplicity
 we will use `sum` for the examples. The learnings should apply equally to any
 type of recursive problem, although the runtime constants/impact will vary.
+Since `sum` is a single subproblem recursion, we also include `treeSum` examples
+for how to handle multiple recursion.
 
 <!-- cut -->
 
@@ -83,6 +85,38 @@ It also comes with a significant performance boost, since we are not creating al
 those stack frames, and can sometimes make the difference between a solution
 that is too slow, and one that is fast enough™.
 
+**Sidenote:** while the `sum` function would probably be best done as a reducer
+function, this does not generalize well to cases where the solution calls for
+multiple subproblem recursion. E.g. for traversing a tree, we will want to process
+the current node, and add all the children to the stack/queue. In a binary tree,
+summing over the nodes looks something like this.
+
+```js
+// Recursive tree depth first tree sum:
+const binaryTreeSum = root =>
+	root ? root.value + binaryTreeSum(root.left) + binaryTreeSum(root.right) : 0;
+const naryTreeSum = root =>
+	root.value + root.children.reduce((acc, child) => acc + naryTreeSum(child), 0);
+
+// Loop based depth first tree sum:
+const boringTreeSum = root => {
+	let acc = 0;
+	const nodes = [root];
+	while (nodes.length) {
+		// Use .pop instead of shift for Breadth first traversal
+		const node = nodes.shift();
+
+		acc += node.value;
+		// binary case:
+		if (node.left) nodes.push(node.left);
+		if (node.right) nodes.push(node.right);
+		// n-ary case:
+		// nodes = nodes.concat(node.children);
+	}
+	return acc;
+};
+```
+
 # Tail call optimization
 
 Rewriting recursion into a loop is basically what the compiler will do in
@@ -96,9 +130,12 @@ Consider it equivalent to either evaluating `1 + (2 + (3 + (4)))` or `1 + 2 + 3 
 For `1 + (2 + (3 + (4)))`, we first encounter `1 + (...)`, and we make a note of that.
 To continue we evaluate `2 + (...)`, but need first evaluate the second part, etc.
 On the other hand, `1 + 2 + 3 + 4` can be collapsed immediately when we see `1 + 2`,
-to `3 + 3 + 4`, without making any notes and partial results.
+to `3 + 3 + 4`, without making any notes and partial results. If you've ever used
+a calculator with Reverse Polish Notation, you will be familiar with the cumbersome
+process of calculating the first example instead of the second, since each paren
+requires another number to be pushed onto the stack.
 
-In practice, this is commonly done by introducing an accumulator. Basically we keep a running sum,
+In practice, this is commonly solved by introducing an accumulator. Basically we keep a running sum,
 such that instead of creating a call stack with `sum([1, 2, 3, 4])` of `1 + (2 + (...))`
 we can evaluate the plus immediately, and pass it on to a new function call as the accumulator argument.
 
@@ -107,14 +144,14 @@ This allows the runtime to swap the current stack frame with the new function ca
 in order to get the final result.
 
 ```js
-const tailcallSum = (list, acc) => (list.length ? sum(list.slice(1), list[0] + acc) : acc);
+const tailcallSum = (list, acc = 0) => (list.length ? sum(list.slice(1), list[0] + acc) : acc);
 ```
 
 **But...** NodeJS had tail call optimization for a while
 [(`v6.2` to `v7.10`)][stackoverflow-tco], but due to limitations in the
 underlying V8 engine, it is no longer available.
 
-The support in your favorite browser might [already be here](<https://kangax.github.io/compat-table/es6/#test-proper_tail_calls_(tail_call_optimisation)>),
+The support in your favorite browser might [already be here][tco-support],
 but support is very sparse. Consider it future proofing, or a way of opting into
 a future performance boost. Who can say no to that?
 
@@ -134,9 +171,12 @@ some [Recursion microbenchmarks](https://jsperf.com/recursion-stack)
 Even though it will vary per browser, the conclusion is pretty clear.
 A simple loop is a lot more efficient than any of the recursive forms.
 
-We can even see it visually, how they affect the call stack, by using devtools to run a performance profile:
+We can even see it visually, how they affect the call stack, by using devtools to run a performance profile.
+The flame chart for the recursive sum shows the deep call stack very clearly:
 
 ![call stack results](/assets/images/callstack-recursion-perf.png)
+
+The same graph for the loop based function is hardly doing any work in comparison:
 
 ![call stack results](/assets/images/callstack-boringsum-perf.png)
 
@@ -155,3 +195,4 @@ trying to optimize the startup of your apps, rewriting a recursive function to
 a simple loop might be an easy win!
 
 [stackoverflow-tco]: https://stackoverflow.com/questions/23260390/node-js-tail-call-optimization-possible-or-not#30369729
+[tco-support]: https://kangax.github.io/compat-table/es6/#test-proper_tail_calls_(tail_call_optimisation)
